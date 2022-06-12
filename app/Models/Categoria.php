@@ -7,30 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\softDeletes;
 
 
-class Articulo extends Model
+class Categoria extends Model
 {
     use HasFactory;
     use softDeletes;
 
-    protected $dates = ['deleted_at'];
-
 
     protected $fillable = [
-        'descripcion', 
-        'precio', 
-        'stock'
+        'nombre'        
     ];
-
 
     // funciones publicas
     public function obtenerObjDatos():array{
         return [
             'id' => $this->id,
-            'descripcion' => $this->descripcion,
-            'precio' => $this->precio,
-            'stock' => $this->stock,
-            'idCategoria' => $this->idCategoria,
-            'idUnidadMedida' => $this->idUnidadMedida,
+            'nombre' => $this->nombre,
         ];
     }
 }
