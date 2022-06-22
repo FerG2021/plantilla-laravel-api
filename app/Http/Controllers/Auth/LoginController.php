@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \Illuminate\Http\Request;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -61,4 +62,24 @@ class LoginController extends Controller
         return response()->json(null);
 
     }
+
+
+    // traer los datos de mi cuenta para poder visualizarlos
+    public function getDatos($id){
+        $miCuentaBD = User::find($id);
+
+        if ($miCuentaBD) {
+            $listaDevolver = [
+                'id' => $miCuentaBD->id,
+                'nombre' => $miCuentaBD->name,
+                'email' => $miCuentaBD->email,                
+            ];
+
+            return $listaDevolver;
+        } else {
+            return 0;
+        }
+    }
+
+
 }

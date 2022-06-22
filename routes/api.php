@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UnidadMedidaController;
-// 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\RubroController;
+
 
 
 
@@ -67,5 +70,38 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/unidad-medida/crear', [UnidadMedidaController::class,'crear']);
     Route::put('/unidad-medida/actualizar/{id}', [UnidadMedidaController::class,'actualizar']);
     Route::delete('/unidad-medida/eliminar/{id}', [UnidadMedidaController::class,'eliminar']);
+
+    // MI CUENTA
+    Route::get('/mi-cuenta/obtenerDatos/{id}', [LoginController::class,'getDatos']);
+
+    // USUARIOS
+    Route::get('/usuario/obtenerTodos', [UserController::class,'getTodos']);
+    Route::post('/usuario/crear', [UserController::class,'crear']);
+    Route::get('/usuario/obtenerDatos/{id}', [UserController::class,'getDatos']);
+    Route::put('/usuario/actualizar/{id}', [UserController::class,'actualizar']);
+    Route::delete('/usuario/eliminar/{id}', [UserController::class,'eliminar']);
+
+
+    //PROVEEDORES
+    Route::get('/proveedor/obtenerTodos', [ProveedorController::class,'getTodos']);
+    // Route::get('/articulo/obtenerTodosSelect', [ArticuloController::class,'getTodosSelect']);
+    Route::get('/proveedor/obtenerDatos/{id}', [ProveedorController::class,'getDatos']);
+    Route::post('/proveedor/crear', [ProveedorController::class,'crear']);
+    // Route::put('/articulo/actualizar/{id}', [ArticuloController::class,'update']);
+    // Route::delete('/articulo/eliminar/{id}', [ArticuloController::class,'destroy']);
+
+
+    // RUBROS
+    Route::get('/rubro/obtenerTodos', [RubroController::class,'getTodos']);
+    Route::post('/rubro/crear', [RubroController::class,'crear']);
+    Route::get('/rubro/obtenerTodosSelect', [RubroController::class,'getTodosSelect']);
+
+
+
+
+
+
+    
+
 
 });
