@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rubros', function (Blueprint $table) {
-            $table->increments('rubro_auto');
-            $table->integer('rubro_id')->unique();
-            $table->string('rubro_nombre');
-            $table->string('rubro_codigo');
+        Schema::create('deposito', function (Blueprint $table) {
+            $table->increments('deposito_auto');
+            $table->integer('deposito_id')->unique();
+            $table->string('deposito_codigo');
+            $table->string('deposito_nombre');
+            $table->string('deposito_direccion');
             $table->softDeletes(); 
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rubros');
+        Schema::dropIfExists('deposito');
     }
 };

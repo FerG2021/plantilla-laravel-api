@@ -16,7 +16,7 @@ class RubroController extends Controller
      */
     public function getTodos()
     {
-        $rubros = Rubro::orderBy('created_at', 'desc')->get();
+        $rubros = Rubro::orderBy('rubro_nombre', 'asc')->get();
 
         return $rubros;
     }

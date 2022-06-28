@@ -10,10 +10,13 @@ class Rubro extends Model
 {
     use HasFactory;
     use softDeletes;
+    
+    protected $primaryKey = 'rubro_id';
 
     protected $fillable = [
         'rubro_id',
-        'rubro_nombre',        
+        'rubro_nombre', 
+        'rubro_codigo',        
     ];
 
     // funciones publicas
@@ -21,6 +24,7 @@ class Rubro extends Model
         return [
             'rubro_id' => $this->rubro_id,
             'rubro_nombre' => $this->rubro_nombre,
+            'rubro_codigo' => $this->rubro_codigo,
         ];
     }
 

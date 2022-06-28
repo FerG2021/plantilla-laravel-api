@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proveedores', function (Blueprint $table) {
+        Schema::create('proveedor', function (Blueprint $table) {
             $table->increments('proveedor_auto');
             $table->integer('proveedor_id')->unique();
             $table->string('proveedor_codigo');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proveedores');
+        Schema::dropIfExists('proveedor');
     }
 };
