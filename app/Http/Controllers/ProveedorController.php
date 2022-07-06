@@ -17,7 +17,7 @@ class ProveedorController extends Controller
      */
     public function getTodos()
     {
-        $proveedores = Proveedor::orderBy('created_at', 'desc')->get();
+        $proveedores = Proveedor::orderBy('proveedor_nombre', 'asc')->get();
 
         return $proveedores;
     }
@@ -37,7 +37,7 @@ class ProveedorController extends Controller
      */
     public function getDatos($id)
     {   
-        $proveedorBD = Proveedor::where('proveedor_auto','=',$id)->first(); 
+        $proveedorBD = Proveedor::where('proveedor_id','=',$id)->first(); 
         
         // $proveedorBD = Proveedor::find($id);
 

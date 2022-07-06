@@ -12,6 +12,10 @@ class Proveedor extends Model
     use HasFactory;
     use softDeletes;
 
+    protected $primaryKey = 'proveedor_id';
+
+
+
     protected $fillable = [
         'proveedor_id',
         'proveedor_codigo',
@@ -30,6 +34,7 @@ class Proveedor extends Model
             'proveedor_codigo' => $this->proveedor_codigo,
             'proveedor_razonsocial' => $this->proveedor_razonsocial,
             'proveedor_cuit' => $this->proveedor_cuit,
+            'proveedor_email' => $this->proveedor_email,
             'proveedor_activo' => $this->proveedor_activo,
         ];
     }

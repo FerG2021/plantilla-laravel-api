@@ -12,7 +12,8 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RubroController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\DepositoArticuloController;
-
+use App\Http\Controllers\ProveedorxrubroController;
+use App\Http\Controllers\PrevisionController;
 
 
 use App\Http\Controllers\ProductoController;
@@ -82,6 +83,16 @@ Route::group(['middleware' => ['web']], function () {
 
     // DEPOSITOARTICULO
     Route::get('/depositoArticulo/obtenerDatos/{id}', [DepositoArticuloController::class,'getDatos']);
+
+    // PREVISION
+    Route::post('/prevision/obtenerCantidad', [PrevisionController::class,'getCantidadAPresupuestar']);
+
+    // PROVEEDORXRUBRO
+    Route::post('/proveedorxrubro/crear', [ProveedorxrubroController::class,'crear']);
+    Route::get('/proveedorxrubro/obtenerTodos', [ProveedorxrubroController::class,'getTodos']);
+    Route::get('/proveedorxrubro/obtenerDatos/{id}', [ProveedorxrubroController::class,'getDatos']);
+    Route::get('/proveedorxrubro/obtenerDatos/{id}', [ProveedorxrubroController::class,'getDatos']);
+    Route::post('/proveedorxrubro/obtenerProveedorxRubro', [ProveedorxrubroController::class,'getProveedorxRubro']);
 
    
     // USUARIOS
