@@ -14,6 +14,12 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\DepositoArticuloController;
 use App\Http\Controllers\ProveedorxrubroController;
 use App\Http\Controllers\PrevisionController;
+use App\Http\Controllers\VistaPrevisionController;
+use App\Http\Controllers\PresupuestacionController;
+use App\Http\Controllers\PresupuestacionProductosProveedoresController;
+
+
+
 
 
 use App\Http\Controllers\ProductoController;
@@ -93,6 +99,26 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/proveedorxrubro/obtenerDatos/{id}', [ProveedorxrubroController::class,'getDatos']);
     Route::get('/proveedorxrubro/obtenerDatos/{id}', [ProveedorxrubroController::class,'getDatos']);
     Route::post('/proveedorxrubro/obtenerProveedorxRubro', [ProveedorxrubroController::class,'getProveedorxRubro']);
+
+    // VISTA PREVISION
+    Route::get('/vistaprevision/obtenerTodos', [VistaPrevisionController::class,'getTodos']);
+    Route::get('/vistaprevision/obtenerDatos/{id}', [VistaPrevisionController::class,'getDatos']);
+    Route::post('/vistaprevision/obtenerDatos', [VistaPrevisionController::class,'getDatos']);
+
+    // PRESUPUESTACION  
+    Route::post('/presupuestacion/crear', [PresupuestacionController::class,'crear']);
+    Route::get('/presupuestacion/obtenerTodos', [PresupuestacionController::class,'getTodos']);
+    Route::get('/presupuestacion/obtenerDatos/{id}', [PresupuestacionController::class,'getDatos']);
+
+    // PRESUPUESTACION PRODUCTOS
+    Route::post('/presupuestacionproductosproveedor/crear', [PresupuestacionProductosProveedoresController::class,'crear']);
+    Route::get('/presupuestacionproductosproveedor/obtenerTodos/{id}', [PresupuestacionProductosProveedoresController::class,'getTodos']);
+
+
+    
+
+
+
 
    
     // USUARIOS
