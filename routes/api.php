@@ -17,6 +17,10 @@ use App\Http\Controllers\PrevisionController;
 use App\Http\Controllers\VistaPrevisionController;
 use App\Http\Controllers\PresupuestacionController;
 use App\Http\Controllers\PresupuestacionProductosProveedoresController;
+use App\Http\Controllers\CondicionPagoController;
+use App\Http\Controllers\BorradorPresupuestacionController;
+
+
 
 
 
@@ -79,7 +83,7 @@ Route::group(['middleware' => ['web']], function () {
     // Route::get('/articulo/obtenerTodosSelect', [ArticuloController::class,'getTodosSelect']);
     Route::get('/proveedor/obtenerDatos/{id}', [ProveedorController::class,'getDatos']);
     Route::post('/proveedor/crear', [ProveedorController::class,'crear']);
-    // Route::put('/articulo/actualizar/{id}', [ArticuloController::class,'update']);
+    Route::post('/proveedor/actualizar', [ProveedorController::class,'actualizar']);
     // Route::delete('/articulo/eliminar/{id}', [ArticuloController::class,'destroy']);
  
     // RUBROS
@@ -113,6 +117,18 @@ Route::group(['middleware' => ['web']], function () {
     // PRESUPUESTACION PRODUCTOS
     Route::post('/presupuestacionproductosproveedor/crear', [PresupuestacionProductosProveedoresController::class,'crear']);
     Route::get('/presupuestacionproductosproveedor/obtenerTodos/{id}', [PresupuestacionProductosProveedoresController::class,'getTodos']);
+    Route::post('/presupuestacionproductosproveedor/obtenerTodosDatos', [PresupuestacionProductosProveedoresController::class,'getTodosDatos']);
+
+    // BORRADORES
+    Route::post('/borradorpresupuestacion/crear', [BorradorPresupuestacionController::class,'crear']);
+    Route::get('/borradorpresupuestacion/obtenerTodos', [BorradorPresupuestacionController::class,'getTodos']);
+    Route::get('/borradorpresupuestacion/obtenerDatos/{id}', [BorradorPresupuestacionController::class,'getDatos']);
+    Route::post('/borradorpresupuestacion/actualizar', [BorradorPresupuestacionController::class,'actualizar']);
+    Route::post('/borradorpresupuestacion/crearPresupuestacion', [BorradorPresupuestacionController::class,'crearPesupuestacion']);
+    
+    
+    // CONDICION DE PAGO
+    Route::get('/condicionpago/obtenerTodos', [CondicionPagoController::class,'getTodos']);
 
 
     

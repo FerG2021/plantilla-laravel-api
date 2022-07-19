@@ -19,6 +19,12 @@ class PresupuestacionProveedores extends Model
         'proveedor_nombre',
         'proveedor_rubro_id',
         'proveedor_mail', 
+        'proveedor_monto_totalPP',
+        'proveedor_monto_flete',
+        'proveedor_factura_A',
+        'proveedor_forma_de_pago',
+        'proveedor_monto_descuentos_bonificaciones',
+        'proveedor_monto_total_homogeneo',
     ];
 
     // funciones publicas
@@ -30,7 +36,13 @@ class PresupuestacionProveedores extends Model
             'proveedor_id' => $this->proveedor_id,
             'proveedor_nombre' => $this->proveedor_nombre,
             'proveedor_rubro_id' => $this->proveedor_rubro_id,
-            'proveedor_mail' => $this->proveedor_mail,  
+            'proveedor_mail' => $this->proveedor_mail, 
+            'proveedor_monto_totalPP' => $this->proveedor_monto_totalPP,
+            'proveedor_monto_flete' => $this->proveedor_monto_flete,
+            'proveedor_factura_A' => $this->proveedor_factura_A,
+            'proveedor_forma_de_pago' => $this->proveedor_forma_de_pago,
+            'proveedor_monto_descuentos_bonificaciones' => $this->proveedor_monto_descuentos_bonificaciones,
+            'proveedor_monto_total_homogeneo'  => $this->proveedor_monto_total_homogeneo,
         ];
     }
 }

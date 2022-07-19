@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Presupuestacion;
 use App\Models\PresupuestacionProductos;
 use App\Models\PresupuestacionProveedores;
+use App\Models\Producto;
+use App\Mail\TestMail;
+use Mail;
 
 
 
@@ -67,7 +70,14 @@ class PresupuestacionController extends Controller
             foreach ($productosDB as $itemProductosDB) {
                 $rubroDevolver = $itemProductosDB->obtenerObjDatos();
 
-                $listaProductosDevolver->push($rubroDevolver);
+                $productoBD = Producto::find($itemProductosDB->producto_id);
+
+                $productoDevolver = [
+                    'productoPresupuestacion' => $rubroDevolver,
+                    'producto' => $productoBD,
+                ];
+
+                $listaProductosDevolver->push($productoDevolver);
             }
             
             // proveedores
@@ -167,6 +177,9 @@ class PresupuestacionController extends Controller
                     $presupuestacionproductos->producto_cantidad_real_a_comprar = $itemProducto->producto_cantidad_real_a_comprar;
 
                     $presupuestacionproductos->save();
+
+                    
+
                 }
             }
 
@@ -191,7 +204,41 @@ class PresupuestacionController extends Controller
 
                     $presupuestacionproveedores->proveedor_mail = $itemProveedores->proveedor_mail;
 
+                    $presupuestacionproveedores->proveedor_monto_totalPP = 0; 
+                    $presupuestacionproveedores->proveedor_monto_flete = 0;
+                    $presupuestacionproveedores->proveedor_factura_A = 0;
+                    $presupuestacionproveedores->proveedor_forma_de_pago = 0;
+                    $presupuestacionproveedores->proveedor_monto_descuentos_bonificaciones = 0;
+                    $presupuestacionproveedores->proveedor_monto_total_homogeneo = 0;
+
                     $presupuestacionproveedores->save();
+
+                    // busco cada uno de los productos del proveedor para crear el objeto para enviar el mail
+                    
+                    $listaProductosXProveedorMail = collect();
+
+                    foreach ($arrProductos as $itemProducto) {
+                        if ($itemProducto->producto_rubro_id == $itemProveedores->proveedor_rubro_id) {
+                            $datosProducto = [
+                                'nombre' => $itemProducto->producto_nombre,
+                                'cantidad' => $itemProducto->producto_cantidad_real_a_comprar,
+                            ];
+
+                            $listaProductosXProveedorMail->push($datosProducto);       
+                        }
+                    }
+
+
+                    $objEnviarMail = [
+                        'nombreProveedor' => $itemProveedores->proveedor_nombre,
+                        'mailProveedor' => $itemProveedores->proveedor_mail,
+                        'productos' => $listaProductosXProveedorMail,
+                    ];
+
+
+
+                    Mail::to($itemProveedores->proveedor_mail)->send(new TestMail($objEnviarMail, $listaProductosXProveedorMail));     
+
                 }
 
             }
@@ -200,8 +247,8 @@ class PresupuestacionController extends Controller
 
         
 
-
-        
+        // $data = "Amor de mi vida";
+        // Mail::to('sabrinampereyra@gmail.com')->send(new TestMail($data));  
 
 
         

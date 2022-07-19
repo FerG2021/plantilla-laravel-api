@@ -21,6 +21,12 @@ return new class extends Migration
             $table->string('proveedor_nombre');
             $table->integer('proveedor_rubro_id');
             $table->string('proveedor_mail');
+            $table->decimal('proveedor_monto_totalPP', 8, 2);
+            $table->decimal('proveedor_monto_flete', 8, 2);
+            $table->boolean('proveedor_factura_A');
+            $table->integer('proveedor_forma_de_pago');
+            $table->decimal('proveedor_monto_descuentos_bonificaciones', 8, 2);
+            $table->decimal('proveedor_monto_total_homogeneo', 8, 2);
             $table->timestamps();
         });
     }

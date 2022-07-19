@@ -16,9 +16,13 @@ class TestMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+    public $objEnviarMail;
+    public $listaProductosXProveedorMail;
+    public function __construct($objEnviarMail, $listaProductosXProveedorMail)
     {
-        //
+        $this->objEnviarMail = $objEnviarMail;
+        $this->listaProductosXProveedorMail = $listaProductosXProveedorMail;
     }
 
     /**
@@ -28,6 +32,10 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'))
+                    ->view('testmail')
+                    ->subject('Titulo del correo')
+                    ->with('objEnviarMail', $this->objEnviarMail)
+                    ->with('listaProductosXProveedorMail', $this->listaProductosXProveedorMail);
     }
 }

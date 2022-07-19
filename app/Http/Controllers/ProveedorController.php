@@ -155,6 +155,18 @@ class ProveedorController extends Controller
         }
     }
 
+    public function actualizar(Request $request)
+    {
+        $proveedor = Proveedor::findOrFail($request->id);
+
+        $proveedor->proveedor_email = $request->mail;
+
+        $proveedor->save();
+
+        return $proveedor;
+    }
+
+
     /**
      * Display the specified resource.
      *
