@@ -161,6 +161,22 @@ class PresupuestacionProductosProveedoresController extends Controller
                 }
             }
 
+
+            // $listaProductosDevolver = collect();
+            
+            // foreach ($productoProveedor as $itemProducto) {
+            //     if ($itemProveedor->proveedor_id == $itemProducto->proveedor_id) {
+            //         $productoBD = Producto::find($itemProducto->producto_id);
+
+            //         $productoDevolver = [
+            //             'productoPresupuestacion' => $itemProducto,
+            //             'producto' => $productoBD,
+            //         ];
+
+            //         $productos->push($productoDevolver);
+            //     }
+            // }
+
             $objDevolver = [
                 'presupuestacion_proveedor_id' => $itemProveedor->presupuestacion_proveedor_id,
                 'presupuestacion_id' => $itemProveedor->presupuestacion_id,
