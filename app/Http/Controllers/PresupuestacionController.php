@@ -176,6 +176,8 @@ class PresupuestacionController extends Controller
 
                     $presupuestacionproductos->producto_cantidad_real_a_comprar = $itemProducto->producto_cantidad_real_a_comprar;
 
+                    $presupuestacionproductos->producto_observaciones = $itemProducto->producto_observaciones;
+
                     $presupuestacionproductos->save();
 
                     

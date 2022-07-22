@@ -26,6 +26,8 @@ class BorradorPresupuestacionProductos extends Model
         'borrador_producto_cantidad_a_comprar',
         'borrador_producto_cantidad_deposito',
         'borrador_producto_cantidad_real_a_comprar',
+        'borrador_producto_observaciones',
+
     ];
 
     public function obtenerObjDatos():array{
@@ -40,6 +42,8 @@ class BorradorPresupuestacionProductos extends Model
             'borrador_producto_cantidad_a_comprar' => $this->borrador_producto_cantidad_a_comprar,
             'borrador_producto_cantidad_deposito' => $this->borrador_producto_cantidad_deposito,
             'borrador_producto_cantidad_real_a_comprar' => $this->borrador_producto_cantidad_real_a_comprar,
+            'borrador_producto_observaciones' => $this->borrador_producto_observaciones,
+            
         ];
     }
 }

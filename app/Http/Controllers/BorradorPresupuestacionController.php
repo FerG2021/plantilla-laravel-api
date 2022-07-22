@@ -167,6 +167,8 @@ class BorradorPresupuestacionController extends Controller
 
                     $presupuestacionproductos->borrador_producto_cantidad_real_a_comprar = $itemProducto->producto_cantidad_real_a_comprar;
 
+                    $presupuestacionproductos->borrador_producto_observaciones = $itemProducto->producto_observaciones;
+
                     $presupuestacionproductos->save();
                 }
             }
@@ -268,6 +270,9 @@ class BorradorPresupuestacionController extends Controller
                         $presupuestacionproductos->producto_cantidad_deposito = $itemProducto->producto_cantidad_deposito;
     
                         $presupuestacionproductos->producto_cantidad_real_a_comprar = $itemProducto->producto_cantidad_real_a_comprar;
+
+                        $presupuestacionproductos->producto_observaciones = $itemProducto->producto_observaciones;
+                        
     
                         $presupuestacionproductos->save();
     
@@ -434,6 +439,8 @@ class BorradorPresupuestacionController extends Controller
                         $presupuestacionproductos->borrador_producto_cantidad_deposito = $itemProducto->producto_cantidad_deposito;
 
                         $presupuestacionproductos->borrador_producto_cantidad_real_a_comprar = $itemProducto->producto_cantidad_real_a_comprar;
+
+                        $presupuestacionproductos->borrador_producto_observaciones = $itemProducto->producto_observaciones;
 
                         $presupuestacionproductos->save();
 
