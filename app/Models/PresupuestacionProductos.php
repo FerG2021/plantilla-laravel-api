@@ -39,6 +39,7 @@ class PresupuestacionProductos extends Model
             'iva' => $this->iva,
             'precio_pu' => $this->precio_pu,
             'precio_pp' => $this->precio_pp,
+            'producto_observaciones' => $this->producto_observaciones
         ];
     }
 }

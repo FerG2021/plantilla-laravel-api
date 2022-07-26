@@ -273,7 +273,8 @@ class BorradorPresupuestacionController extends Controller
 
                         $presupuestacionproductos->producto_observaciones = $itemProducto->producto_observaciones;
                         
-    
+                        $presupuestacionproductos->producto_observaciones = $itemProducto->producto_observaciones;
+
                         $presupuestacionproductos->save();
     
                         

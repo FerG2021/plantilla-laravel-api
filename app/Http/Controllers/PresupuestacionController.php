@@ -185,8 +185,6 @@ class PresupuestacionController extends Controller
                 }
             }
 
-
-
             // guardo los proveedores de la presupuestacion
             $arrProveedores = json_decode($request->arrayProveedoresMostrarEnviar);
 
