@@ -36,6 +36,7 @@ class PresupuestacionProductosProveedoresController extends Controller
         $presupuestacionProveedor->proveedor_monto_totalPP = $request->totalPP;
         $presupuestacionProveedor->proveedor_monto_flete = $request->precioFlete;
         $presupuestacionProveedor->proveedor_factura_A = $request->facturaA;
+        $presupuestacionProveedor->proveedor_monto_factura_A = $request->proveedor_monto_factura_A;
         $presupuestacionProveedor->proveedor_forma_de_pago = $request->condicionpago;
         $presupuestacionProveedor->proveedor_monto_descuentos_bonificaciones = $request->descuentosyBonificaciones;
         $presupuestacionProveedor->proveedor_monto_total_homogeneo = $request->totalHomogeneo;
@@ -74,6 +75,11 @@ class PresupuestacionProductosProveedoresController extends Controller
                     $presupuestacionProductosProveedores->producto_nombre = $item->producto_nombre;
                     
                     $presupuestacionProductosProveedores->producto_cantidad_a_comprar = $item->producto_cantidad_a_comprar;
+
+                    $presupuestacionProductosProveedores->factor = $item->factor;
+
+                    $presupuestacionProductosProveedores->cantidad_proveedor = $item->cantidad_proveedor;
+
 
                     $presupuestacionProductosProveedores->precio_png = $item->precio_png;
 
@@ -115,6 +121,10 @@ class PresupuestacionProductosProveedoresController extends Controller
                 $productoProveedor->producto_nombre = $item->producto_nombre;
                 
                 $productoProveedor->producto_cantidad_a_comprar = $item->producto_cantidad_a_comprar;
+
+                $productoProveedor->factor = $item->factor;
+
+                $productoProveedor->cantidad_proveedor = $item->cantidad_proveedor;
 
                 $productoProveedor->precio_png = $item->precio_png;
 

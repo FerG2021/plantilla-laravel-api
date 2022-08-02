@@ -24,6 +24,8 @@ class PresupuestacionProductosProveedores extends Model
         'producto_id',
         'producto_nombre',
         'producto_cantidad_a_comprar',
+        'factor',
+        'cantidad_proveedor',
         'precio_png',
         'iva',
         'precio_pu',
