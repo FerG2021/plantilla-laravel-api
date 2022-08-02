@@ -249,6 +249,13 @@ class PresupuestacionProductosProveedoresController extends Controller
         // return $listaDevolver;
     }
 
+    public function getTodosProveedores($id)
+    {  
+       $presupuestacionProveedores = PresupuestacionProveedores::where('presupuestacion_id', '=', $id)->get();
+
+       return $presupuestacionProveedores;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

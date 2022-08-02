@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Presupuestacion;
+use App\Models\PresupuestacionProveedores;
+
 
 
 class PrevisionProveedoresController extends Controller
@@ -16,6 +18,18 @@ class PrevisionProveedoresController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTodos($id)
+    {  
+       $presupuestacionProveedores = PresupuestacionProveedores::where('presupuestacion_id', '=', $id)->get();
+
+       return $presupuestacionProveedores;
     }
 
     /**
