@@ -28,6 +28,7 @@ class PresupuestacionProductosProveedores extends Model
         'cantidad_proveedor',
         'precio_png',
         'iva',
+        'total_iva',
         'precio_pu',
         'precio_pp',
     ];

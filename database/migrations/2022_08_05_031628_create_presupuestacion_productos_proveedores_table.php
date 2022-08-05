@@ -30,6 +30,7 @@ return new class extends Migration
             $table->decimal('cantidad_proveedor', 8, 2);
             $table->decimal('precio_png', 8, 2);
             $table->decimal('iva', 8, 2);
+            $table->decimal('total_iva', 8, 2);
             $table->decimal('precio_pu', 8, 2);
             $table->decimal('precio_pp', 8, 2);
             $table->timestamps();
