@@ -222,6 +222,7 @@ class PresupuestacionController extends Controller
                             $datosProducto = [
                                 'nombre' => $itemProducto->producto_nombre,
                                 'cantidad' => $itemProducto->producto_cantidad_real_a_comprar,
+                                'observaciones' =>$itemProducto->producto_observaciones,
                             ];
 
                             $listaProductosXProveedorMail->push($datosProducto);       

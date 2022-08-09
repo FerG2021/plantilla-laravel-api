@@ -25,6 +25,8 @@
                 <td>{{ $producto['nombre'] }}</td>
                 <td>-</td>
                 <td>{{ $producto['cantidad'] }}</td>
+                <td>-</td>
+                <td>{{ $producto['observaciones'] }}</td>
             </tr> 
         @endforeach
         
