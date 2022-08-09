@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('password_plain')->nullable();
+            $table->integer('proveedor_id')->nullable();
             $table->rememberToken();
             $table->softDeletes(); 
             $table->timestamps();
