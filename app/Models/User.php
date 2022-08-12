@@ -22,7 +22,22 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'password_plain',
+        'tipo_usuario',
+        'proveedor_id',
     ];
+
+    // funciones publicas
+    public function obtenerObjDatos():array{
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => $this->password,
+            'password_plain' => $this->password_plain,
+            'tipo_usuario' => $this->tipo_usuario,
+            'proveedor_id' => $this->proveedor_id,
+        ];
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('password_plain')->nullable();
+            $table->integer('tipo_usuario')->nullable();
             $table->integer('proveedor_id')->nullable();
             $table->rememberToken();
             $table->softDeletes(); 

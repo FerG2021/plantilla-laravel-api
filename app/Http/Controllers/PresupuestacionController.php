@@ -7,6 +7,7 @@ use App\Models\Presupuestacion;
 use App\Models\PresupuestacionProductos;
 use App\Models\PresupuestacionProveedores;
 use App\Models\Producto;
+use App\Models\User;
 use App\Mail\TestMail;
 use Mail;
 
@@ -228,11 +229,15 @@ class PresupuestacionController extends Controller
                             $listaProductosXProveedorMail->push($datosProducto);       
                         }
                     }
+                    
 
+                    // busco el proveedor para pasarle el mail y la contraseña
+                    $proveedoresMail = User::where('proveedor_id', '=', $itemProveedores->proveedor_id)->first();
 
                     $objEnviarMail = [
                         'nombreProveedor' => $itemProveedores->proveedor_nombre,
                         'mailProveedor' => $itemProveedores->proveedor_mail,
+                        'contrasenaProveedor' => $proveedoresMail->password_plain,
                         'productos' => $listaProductosXProveedorMail,
                     ];
 

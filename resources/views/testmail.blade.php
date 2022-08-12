@@ -18,6 +18,8 @@
             <td><strong>Producto</strong></td>
             <td>-</td>
             <td><strong>Cantidad</strong></td>
+            <td>-</td>
+            <td><strong>Observaciones</strong></td>
         </tr>
 
         @foreach ($objEnviarMail ['productos'] as $producto)
@@ -61,7 +63,7 @@
     <p>Esta empresa cuenta con servicio de auditoría de compras. Ante cualquier inquietud o insatisfacción, por favor comuníquese con Nicolás Bernardi al 011-53231155.</p>
 
 
-    <p>Para ingresar deberá hacer <a href="http://localhost:3000/login?user=pp@gmail.com&password=40899041">click aquí</a></p>
+    <p>Para ingresar deberá hacer <a href="http://localhost:3000/login?user={{$objEnviarMail['mailProveedor']}}&password={{$objEnviarMail['contrasenaProveedor']}}">click aquí</a></p>
 
 </body>
 </html>
