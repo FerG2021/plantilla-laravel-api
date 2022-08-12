@@ -238,6 +238,8 @@ class PresupuestacionController extends Controller
                         'nombreProveedor' => $itemProveedores->proveedor_nombre,
                         'mailProveedor' => $itemProveedores->proveedor_mail,
                         'contrasenaProveedor' => $proveedoresMail->password_plain,
+                        'proveedorID' => $proveedoresMail->proveedor_id,
+                        'presupuestacionID' => $presupuestacionBD->presupuestacion_id,
                         'productos' => $listaProductosXProveedorMail,
                     ];
 
