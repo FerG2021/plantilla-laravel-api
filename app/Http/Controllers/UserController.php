@@ -153,6 +153,27 @@ class UserController extends Controller
         
     }
 
+    public function getDatosMail(Request $request)
+    {
+        $usuarioDB = User::where('email', '=', $request->mail_usuario)->first();
+
+        if ($usuarioDB) {
+            $listaDevolver = [
+                'id' => $usuarioDB->id,
+                'nombre' => $usuarioDB->name,
+                'email' => $usuarioDB->email,
+                'tipo_usuario' => $usuarioDB->tipo_usuario,
+            ];
+
+            $respuesta = APIHelpers::createAPIResponse(false, 200, 'Usuario encontrado', $listaDevolver);
+
+            return response()->json($respuesta, 200);
+        } else {
+            return 0;
+        }
+        
+    }
+
 
     /**
      * Update the specified resource in storage.

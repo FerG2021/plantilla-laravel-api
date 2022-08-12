@@ -146,6 +146,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/usuario/obtenerTodos', [UserController::class,'getTodos']);
     Route::post('/usuario/crear', [UserController::class,'crear']);
     Route::get('/usuario/obtenerDatos/{id}', [UserController::class,'getDatos']);
+    Route::post('/usuario/obtenerDatosMail', [UserController::class,'getDatosMail']);
     Route::put('/usuario/actualizar/{id}', [UserController::class,'actualizar']);
     Route::delete('/usuario/eliminar/{id}', [UserController::class,'eliminar']);
 
