@@ -62,8 +62,8 @@
     <h3><b>Sitio web: modularsrl.com.ar/ </b></h3>
     <p>Esta empresa cuenta con servicio de auditoría de compras. Ante cualquier inquietud o insatisfacción, por favor comuníquese con Nicolás Bernardi al 011-53231155.</p>
 
-
-    <p>Para ingresar deberá hacer <a href="http://localhost:3000/login?user={{$objEnviarMail['mailProveedor']}}&password={{$objEnviarMail['contrasenaProveedor']}}&proveedorID={{$objEnviarMail['proveedorID']}}&presupuestacionID={{$objEnviarMail['presupuestacionID']}}">click aquí</a></p>
+    <p>Podrá realizar la carga de los precios de cada uno de los productos desde nuestra web. </p>
+    <p>Para ingresar deberá hacer <a href="http://localhost:3000/login?user={{$objEnviarMail['mailProveedor']}}&password={{$objEnviarMail['contrasenaProveedor']}}&proveedorID={{$objEnviarMail['proveedorID']}}&presupuestacionID={{$objEnviarMail['presupuestacionID']}}&fechaLimiteCarga={{$objEnviarMail['fechaLimiteCarga']}}">click aquí</a></p>
 
 </body>
 </html>

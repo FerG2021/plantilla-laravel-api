@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Proveedor;
 use Illuminate\Support\Facades\Hash;
 use App\Helpers\APIHelpers;
 use Validator, Auth;
@@ -95,14 +96,36 @@ class UserController extends Controller
 
             // return reponse()->json(['data' => usuario]);
 
-
-
-        
-
-       
-        
-        
     }
+
+    public function crearUsuarioProveedor(){
+        $usuarioProveedor = User::whereNotNull('proveedor_id')->get();
+
+        $proveedoresDB = Proveedor::all();
+
+        foreach ($proveedoresDB as $itemProveedor) {
+            $b = 0;
+            foreach ($usuarioProveedor as $itemUsuarioProveedor) {
+                if ($itemProveedor->proveedor_id == $itemUsuarioProveedor->proveedor_id) {
+                    $b = 1;
+                }
+            }
+
+            if ($b == 0) {
+                $usuario = new User();
+
+                $usuario->name = $itemProveedor->proveedor_nombre;
+                $usuario->email = $itemProveedor->proveedor_email;
+                $usuario->password = Hash::make("1234567890");
+                $usuario->password_plain = "1234567890";
+                $usuario->tipo_usuario = 2;
+                $usuario->proveedor_id = $itemProveedor->proveedor_id;
+    
+                $usuario->save(); 
+            }
+        }
+    }
+
 
     /**
      * Display the specified resource.

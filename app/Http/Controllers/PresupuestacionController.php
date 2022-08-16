@@ -8,6 +8,7 @@ use App\Models\PresupuestacionProductos;
 use App\Models\PresupuestacionProveedores;
 use App\Models\Producto;
 use App\Models\User;
+use App\Models\Transferencia;
 use App\Mail\TestMail;
 use Mail;
 
@@ -103,10 +104,11 @@ class PresupuestacionController extends Controller
                 'productos' => $listaProductosDevolver,
                 'proveedores' => $listaProveedoresDevolver,
             ];
+            
+            return $objDevolver;
 
         }
         
-        return $objDevolver;
     }
 
     /**
@@ -144,14 +146,47 @@ class PresupuestacionController extends Controller
             $presupuestacion->presupuestacion_fecha_incio = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_incio));
 
             $presupuestacion->presupuestacion_fecha_fin = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_fin));
+
+            $presupuestacion->presupuestacion_fecha_limite = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_limite));
             
             $presupuestacion->save();
 
 
 
-            // guardo los productos de la presupuestacion
+            // busco la transferencia creada para tomar la presupuestacion_id
             $presupuestacionBD = Presupuestacion::orderBy('presupuestacion_id', 'desc')->first();
 
+            // guardo los datos de la transferencia de cada uno de los productos utlizados
+            $arrTransferencias = json_decode($request->arrTransferencias);
+
+            foreach ($arrTransferencias as $itemTransferencia) {
+                $transferencia = new Transferencia();
+
+                $transferencia->transferencia_presupuestacion_id = $presupuestacionBD->presupuestacion_id;
+
+                $transferencia->transferencia_deposito_id = $itemTransferencia->deposito_id;
+
+                $transferencia->transferencia_deposito_producto_id = $itemTransferencia->deposito_producto_id;
+
+                $transferencia->transferencia_producto_activo = $itemTransferencia->producto_activo;
+
+                $transferencia->transferencia_producto_id = $itemTransferencia->producto_id;
+
+                $transferencia->transferencia_producto_nombre = $itemTransferencia->producto_nombre;
+
+                $transferencia->transferencia_producto_stock = $itemTransferencia->producto_stock;
+
+                $transferencia->transferencia_producto_unidad = $itemTransferencia->producto_unidad;
+
+                $transferencia->transferencia_producto_rubro_id = $itemTransferencia->rubro_id;
+
+                $transferencia->transferencia_cantidad_utilizar = $itemTransferencia->cantidad_utilizar;
+
+                $transferencia->save();
+            }
+
+
+            // guardo los productos de la presupuestacion
             $arrProductos = json_decode($request->arrayProductosAComprarEnviar);
 
 
@@ -239,6 +274,7 @@ class PresupuestacionController extends Controller
                         'mailProveedor' => $itemProveedores->proveedor_mail,
                         'contrasenaProveedor' => $proveedoresMail->password_plain,
                         'proveedorID' => $proveedoresMail->proveedor_id,
+                        'fechaLimiteCarga' => $request->presupuestacion_fecha_limite,
                         'presupuestacionID' => $presupuestacionBD->presupuestacion_id,
                         'productos' => $listaProductosXProveedorMail,
                     ];

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('presupuestacion_rubro_nombre');
             $table->dateTime('presupuestacion_fecha_incio');
             $table->dateTime('presupuestacion_fecha_fin');
+            $table->dateTime('presupuestacion_fecha_limite');
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('presupestacion');
+        Schema::dropIfExists('presupuestacions');
     }
 };
