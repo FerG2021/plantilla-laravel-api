@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('borrador_presupuestacion_plan_nombre');
             $table->dateTime('borrador_presupuestacion_fecha_incio');
             $table->dateTime('borrador_presupuestacion_fecha_fin');
+            $table->dateTime('borrador_presupuestacion_fecha_limite');
             $table->boolean('borrador_presupuestado');
             $table->timestamps();
         });

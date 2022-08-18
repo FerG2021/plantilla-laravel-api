@@ -13,6 +13,9 @@ use App\Models\Plan;
 use App\Models\Presupuestacion;
 use App\Models\PresupuestacionProductos;
 use App\Models\PresupuestacionProveedores;
+use App\Models\Transferencia;
+use App\Models\Deposito;
+use App\Models\User;
 use App\Mail\TestMail;
 use Mail;
 
@@ -94,9 +97,26 @@ class BorradorPresupuestacionController extends Controller
                 ];
 
                 $listaProveedoresDevolver->push($proveedorDevolver);
-
-
             }
+
+            // busco las transferencias
+            $transferenciasDB = Transferencia::where('transferencia_borrador_id', '=', $presupuestacionBD->borrador_presupuestacion_id)->get();
+
+            $transferenciasDevolver = collect();
+
+            foreach ($transferenciasDB as $itemTransferencia) {
+                $depositoDB = Deposito::find($itemTransferencia->transferencia_deposito_id);
+                $depositoDevolver = $depositoDB->obtenerObjDatos();
+
+                $objDevolver = [
+                    'itemTransferencia' => $itemTransferencia,
+                    'deposito' => $depositoDB,
+                ];
+
+                $transferenciasDevolver->push($objDevolver);
+            }
+
+
  
             $objDevolver = [
                 'borrador_presupuestacion_id' => $presupuestacionBD->borrador_presupuestacion_id,
@@ -110,8 +130,10 @@ class BorradorPresupuestacionController extends Controller
                 'borrador_presupuestacion_fecha_incio' => $presupuestacionBD->borrador_presupuestacion_fecha_incio,
                 'borrador_presupuestacion_fecha_fin' => $presupuestacionBD->borrador_presupuestacion_fecha_fin,
                 'borrador_presupuesto_fecha_creacion' => $presupuestacionBD->created_at,
+                'borrador_presupuesto_fecha_limite' => $presupuestacionBD->borrador_presupuestacion_fecha_limite,
                 'productos' => $listaProductosDevolver,
                 'proveedores' => $listaProveedoresDevolver,
+                'transferencias' => $transferenciasDevolver,
             ];
         }
 
@@ -121,11 +143,16 @@ class BorradorPresupuestacionController extends Controller
     public function actualizar(Request $request){
         $borradorPresupuestacionBD = BorradorPresupuestacion::findOrFail($request->presupuestacion_id);
 
+        
+
         $arrProductosRecibidos = json_decode($request->arrayProductosAComprarEnviar);
 
         $arrProveedoresRecibidos = json_decode($request->arrayProveedoresMostrarEnviar);
 
         if ($borradorPresupuestacionBD) {
+            $borradorPresupuestacionBD->borrador_presupuestacion_fecha_limite = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_limite));
+
+            $borradorPresupuestacionBD->save();
             // elimino los productos viejos y agrego los nuevos
             // $productosEliminar = BorradorPresupuestacionProductos::where('borrador_presupuestacion_id', '=', $request->presupuestacion_id)->get();
 
@@ -138,13 +165,8 @@ class BorradorPresupuestacionController extends Controller
                 // borro los que tienen accion B
                 if ($itemProducto->accion == "B") {
                     $productoEliminar = BorradorPresupuestacionProductos::find($itemProducto->borrador_presupuestacion_producto_id);
-
                     $productoEliminar->delete();
-
-                    
                 }
-
-
 
                 if ($itemProducto->accion == "A") {
                     $presupuestacionproductos = new BorradorPresupuestacionProductos();
@@ -213,6 +235,44 @@ class BorradorPresupuestacionController extends Controller
                 }
             }
 
+            // busco todas las filas de transferencias que tengan el borrador_id correspondiente
+            $arrTransferencias = json_decode($request->arrTransferencias);
+
+            $transferenciasDB = Transferencia::where('transferencia_borrador_id', '=', $request->presupuestacion_id)->get();
+
+            // borro cada una de las transferencias que correspondan con la presupuestacion_id correspondiente
+            foreach ($transferenciasDB as $itemTransferencia) {
+                $itemTransferencia->delete();
+            }
+
+            // agrego las nuevas transferencias
+            foreach ($arrTransferencias as $itemTransferencia) {
+                $transferencia = new Transferencia();
+
+                $transferencia->transferencia_borrador_id = $request->presupuestacion_id;
+
+                $transferencia->transferencia_deposito_id = $itemTransferencia->deposito_id;
+
+                $transferencia->transferencia_deposito_producto_id = $itemTransferencia->deposito_producto_id;
+
+                $transferencia->transferencia_producto_activo = $itemTransferencia->producto_activo;
+
+                $transferencia->transferencia_producto_id = $itemTransferencia->producto_id;
+
+                $transferencia->transferencia_producto_nombre = $itemTransferencia->producto_nombre;
+
+                $transferencia->transferencia_producto_stock = $itemTransferencia->producto_stock;
+
+                $transferencia->transferencia_producto_unidad = $itemTransferencia->producto_unidad;
+
+                $transferencia->transferencia_producto_rubro_id = $itemTransferencia->rubro_id;
+
+                $transferencia->transferencia_cantidad_utilizar = $itemTransferencia->cantidad_utilizar;
+
+                $transferencia->save();
+            }
+
+
             
 
             return $request->presupuestacion_id;
@@ -237,16 +297,55 @@ class BorradorPresupuestacionController extends Controller
             $presupuestacion->presupuestacion_fecha_incio = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_incio));
 
             $presupuestacion->presupuestacion_fecha_fin = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_fin));
+
+            $presupuestacion->presupuestacion_fecha_limite = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_limite));
             
             $presupuestacion->save();
 
 
+            // busco la transferencia creada para tomar la presupuestacion_id
+            $presupuestacionBD = Presupuestacion::orderBy('presupuestacion_id', 'desc')->first();
+            
+            // borro las presupuestaciones creadas
+            $transferenciasDB = Transferencia::where('transferencia_borrador_id', '=', $request->presupuestacion_id)->get();
+
+            // borro cada una de las transferencias que correspondan con la presupuestacion_id correspondiente
+            foreach ($transferenciasDB as $itemTransferencia) {
+                $itemTransferencia->delete();
+            }
+
+            
+            // guardo los datos de la transferencia de cada uno de los productos utlizados
+            $arrTransferencias = json_decode($request->arrTransferencias);
+
+            foreach ($arrTransferencias as $itemTransferencia) {
+                $transferencia = new Transferencia();
+
+                $transferencia->transferencia_presupuestacion_id = $presupuestacionBD->presupuestacion_id;
+
+                $transferencia->transferencia_deposito_id = $itemTransferencia->deposito_id;
+
+                $transferencia->transferencia_deposito_producto_id = $itemTransferencia->deposito_producto_id;
+
+                $transferencia->transferencia_producto_activo = $itemTransferencia->producto_activo;
+
+                $transferencia->transferencia_producto_id = $itemTransferencia->producto_id;
+
+                $transferencia->transferencia_producto_nombre = $itemTransferencia->producto_nombre;
+
+                $transferencia->transferencia_producto_stock = $itemTransferencia->producto_stock;
+
+                $transferencia->transferencia_producto_unidad = $itemTransferencia->producto_unidad;
+
+                $transferencia->transferencia_producto_rubro_id = $itemTransferencia->rubro_id;
+
+                $transferencia->transferencia_cantidad_utilizar = $itemTransferencia->cantidad_utilizar;
+
+                $transferencia->save();
+            }
 
             // guardo los productos de la presupuestacion
-            $presupuestacionBD = Presupuestacion::orderBy('presupuestacion_id', 'desc')->first();
-
             $arrProductos = json_decode($request->arrayProductosAComprarEnviar);
-
 
             foreach ($arrProductos as $itemProducto) {
                 if ($itemProducto->accion == "A") {
@@ -323,17 +422,26 @@ class BorradorPresupuestacionController extends Controller
                                 $datosProducto = [
                                     'nombre' => $itemProducto->producto_nombre,
                                     'cantidad' => $itemProducto->producto_cantidad_real_a_comprar,
+                                    'unidadMedida' => $itemProducto->producto_unidad_medida,
                                     'observaciones' => $itemProducto->producto_observaciones,
                                 ];
     
                                 $listaProductosXProveedorMail->push($datosProducto);       
                             }
                         }
+
+                        // busco el proveedor para pasarle el mail y la contraseña
+                        $proveedoresMail = User::where('proveedor_id', '=', $itemProveedores->proveedor_id)->first();
+
     
     
                         $objEnviarMail = [
                             'nombreProveedor' => $itemProveedores->proveedor_nombre,
                             'mailProveedor' => $itemProveedores->proveedor_mail,
+                            'contrasenaProveedor' => $proveedoresMail->password_plain,
+                            'proveedorID' => $proveedoresMail->proveedor_id,
+                            'fechaLimiteCarga' => $request->presupuestacion_fecha_limite,
+                            'presupuestacionID' => $presupuestacionBD->presupuestacion_id,
                             'productos' => $listaProductosXProveedorMail,
                         ];
     
@@ -396,15 +504,46 @@ class BorradorPresupuestacionController extends Controller
 
             $presupuestacion->borrador_presupuestacion_fecha_fin = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_fin));
 
+            $presupuestacion->borrador_presupuestacion_fecha_limite = date('Y-m-d h:i:s', strtotime($request->presupuestacion_fecha_limite));
+
             $presupuestacion->borrador_presupuestado = 0;
             
             $presupuestacion->save();
 
 
-
-            // guardo los productos de la presupuestacion
+            // busco el borrador creado para tomar el borrador_presupuestacion_id
             $presupuestacionBD = BorradorPresupuestacion::orderBy('borrador_presupuestacion_id', 'desc')->first();
 
+            // guardo los datos de la transferencia de cada uno de los productos utlizados
+            $arrTransferencias = json_decode($request->arrTransferencias);
+
+            foreach ($arrTransferencias as $itemTransferencia) {
+                $transferencia = new Transferencia();
+
+                $transferencia->transferencia_borrador_id = $presupuestacionBD->borrador_presupuestacion_id;
+
+                $transferencia->transferencia_deposito_id = $itemTransferencia->deposito_id;
+
+                $transferencia->transferencia_deposito_producto_id = $itemTransferencia->deposito_producto_id;
+
+                $transferencia->transferencia_producto_activo = $itemTransferencia->producto_activo;
+
+                $transferencia->transferencia_producto_id = $itemTransferencia->producto_id;
+
+                $transferencia->transferencia_producto_nombre = $itemTransferencia->producto_nombre;
+
+                $transferencia->transferencia_producto_stock = $itemTransferencia->producto_stock;
+
+                $transferencia->transferencia_producto_unidad = $itemTransferencia->producto_unidad;
+
+                $transferencia->transferencia_producto_rubro_id = $itemTransferencia->rubro_id;
+
+                $transferencia->transferencia_cantidad_utilizar = $itemTransferencia->cantidad_utilizar;
+
+                $transferencia->save();
+            }
+            
+            // guardo los productos de la presupuestacion
             $arrRubrosComprar = json_decode($request->arrayRubrosAComprar);
 
             foreach ($arrRubrosComprar as $itemRubro) {

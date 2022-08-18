@@ -258,6 +258,7 @@ class PresupuestacionController extends Controller
                             $datosProducto = [
                                 'nombre' => $itemProducto->producto_nombre,
                                 'cantidad' => $itemProducto->producto_cantidad_real_a_comprar,
+                                'unidadMedida' => $itemProducto->producto_unidad_medida,
                                 'observaciones' =>$itemProducto->producto_observaciones,
                             ];
 

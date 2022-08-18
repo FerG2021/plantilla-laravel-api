@@ -17,6 +17,8 @@
         <tr>
             <td><strong>Producto</strong></td>
             <td>-</td>
+            <td><strong>Un. medida</strong></td>
+            <td>-</td>
             <td><strong>Cantidad</strong></td>
             <td>-</td>
             <td><strong>Observaciones</strong></td>
@@ -25,6 +27,8 @@
         @foreach ($objEnviarMail ['productos'] as $producto)
             <tr>
                 <td>{{ $producto['nombre'] }}</td>
+                <td>-</td>
+                <td>{{ $producto['unidadMedida'] }}</td>
                 <td>-</td>
                 <td>{{ $producto['cantidad'] }}</td>
                 <td>-</td>
