@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('borrador_producto_cantidad_deposito', 8, 2);
             $table->decimal('borrador_producto_cantidad_real_a_comprar', 8, 2);
             $table->string('borrador_producto_observaciones');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

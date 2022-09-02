@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('borrador_proveedor_forma_de_pago');
             $table->decimal('borrador_proveedor_monto_descuentos_bonificaciones', 8, 2);
             $table->decimal('borrador_proveedor_monto_total_homogeneo', 8, 2);
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

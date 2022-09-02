@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('condicionpago_codigo');
             $table->string('condicionpago_nombre');
             $table->boolean('condicionpago_activo');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

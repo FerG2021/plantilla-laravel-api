@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class BorradorPresupuestacionProveedores extends Model
 {
     use HasFactory;
-    use softDeletes;
+    use SoftDeletes;
 
 
     protected $primaryKey = 'borrador_presupuestacion_proveedor_id';

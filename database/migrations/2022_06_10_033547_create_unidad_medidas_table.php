@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('unidad_medidas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('tipo_usuario')->nullable();
             $table->integer('proveedor_id')->nullable();
             $table->rememberToken();
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

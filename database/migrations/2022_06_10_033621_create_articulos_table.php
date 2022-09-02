@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->unsignedBigInteger('idCategoria');
             $table->unsignedBigInteger('idUnidadMedida');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
 

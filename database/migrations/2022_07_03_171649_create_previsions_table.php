@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('producto_id');
             $table->decimal('prevision_cantidad', 8, 2);
             $table->string('prevision_unidad');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('producto_unidad');
             $table->boolean('producto_activo');
             $table->integer('rubro_id');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

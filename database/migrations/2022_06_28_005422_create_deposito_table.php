@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('deposito_codigo');
             $table->string('deposito_nombre');
             $table->string('deposito_direccion');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

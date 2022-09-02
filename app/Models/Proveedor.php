@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Proveedor extends Model
 {
     use HasFactory;
-    use softDeletes;
+    use SoftDeletes;
 
     protected $primaryKey = 'proveedor_id';
 

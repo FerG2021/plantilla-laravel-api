@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('rubro_id')->unique();
             $table->string('rubro_nombre');
             $table->string('rubro_codigo');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }
