@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('cliente_id');
             $table->integer('deposito_id');
             $table->integer('transaccion_id');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

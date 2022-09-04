@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('prevision_cantidad', 8, 2);
             $table->string('prevision_unidad');
             $table->dateTime('prevision_periodo');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

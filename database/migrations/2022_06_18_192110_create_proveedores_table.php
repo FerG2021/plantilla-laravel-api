@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('proveedor_cuit');
             $table->string('proveedor_email');
             $table->boolean('proveedor_activo');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }

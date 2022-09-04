@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('proveedorxrubro_auto');
             $table->integer('proveedor_id');
             $table->integer('rubro_id');
-            $table->softDeletes(); 
+            $table->SoftDeletes(); 
             $table->timestamps();
         });
     }
