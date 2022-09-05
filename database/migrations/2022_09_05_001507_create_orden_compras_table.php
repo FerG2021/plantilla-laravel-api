@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ordenes_compras', function (Blueprint $table) {
+        Schema::create('orden_compras', function (Blueprint $table) {
             $table->increments('ordenes_compras_id');
             $table->integer('ordenes_compras_proveedor_id');
             $table->integer('ordenes_compras_presupuestacion_id');
             $table->integer('ordenes_compras_presupuestacion_plan_id');
-            $table->integer('ordenes_compras_proveedor_id');
             $table->string('ordenes_compras_proveedor_nombre');
             $table->string('ordenes_compras_proveedor_mail');
             $table->boolean('ordenes_compras_proveedor_factura_A');
@@ -41,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ordenes_compras');
+        Schema::dropIfExists('orden_compras');
     }
 };

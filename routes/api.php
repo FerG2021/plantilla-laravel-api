@@ -20,6 +20,7 @@ use App\Http\Controllers\PresupuestacionProveedoresController;
 use App\Http\Controllers\PresupuestacionProductosProveedoresController;
 use App\Http\Controllers\CondicionPagoController;
 use App\Http\Controllers\BorradorPresupuestacionController;
+use App\Http\Controllers\OrdenCompraController;
 
 
 
@@ -129,16 +130,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/borradorpresupuestacion/obtenerDatos/{id}', [BorradorPresupuestacionController::class,'getDatos']);
     Route::post('/borradorpresupuestacion/actualizar', [BorradorPresupuestacionController::class,'actualizar']);
     Route::post('/borradorpresupuestacion/crearPresupuestacion', [BorradorPresupuestacionController::class,'crearPesupuestacion']);
+
+
+    // ORDENES DE PAGO
+    Route::post('/ordencompra/crear', [OrdenCompraController::class,'crear']);
+    Route::get('/ordencompra/obtenerTodos', [OrdenCompraController::class,'getTodos']);
+    Route::get('/ordencompra/obtenerDatos/{id}', [OrdenCompraController::class,'getDatos']);
+
     
     
     // CONDICION DE PAGO
     Route::get('/condicionpago/obtenerTodos', [CondicionPagoController::class,'getTodos']);
-
-
-    
-
-
-
 
    
     // USUARIOS
