@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PresupuestacionProductosProveedores;
 use App\Models\PresupuestacionProveedores;
+use App\Models\Producto;
 
 
 
@@ -176,6 +177,18 @@ class PresupuestacionProductosProveedoresController extends Controller
                 }
             }
 
+            // busco los productos de la tabla de productos para agregar la unidad de medida
+            $productosTodosDB = Producto::all();
+            $productosCompleto = collect();
+
+            foreach ($productosTodosDB as $itemProductosTodosDB) {
+                foreach ($productos as $itemProductos) {
+                    if ($itemProductos->producto_id == $itemProductosTodosDB->producto_id) {
+                        $productosCompleto->push($itemProductosTodosDB);
+                    }
+                }
+            }
+
 
             // $listaProductosDevolver = collect();
             
@@ -207,6 +220,7 @@ class PresupuestacionProductosProveedoresController extends Controller
                 'proveedor_monto_descuentos_bonificaciones' => $itemProveedor->proveedor_monto_descuentos_bonificaciones,
                 'proveedor_monto_total_homogeneo' => $itemProveedor->proveedor_monto_total_homogeneo,
                 'productos' => $productos,
+                'productosDB' => $productosCompleto,
             ];
 
             $listaDevolver->push($objDevolver);

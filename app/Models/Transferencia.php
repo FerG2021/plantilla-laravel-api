@@ -26,6 +26,7 @@ class Transferencia extends Model
         'transferencia_producto_unidad',
         'transferencia_producto_rubro_id',
         'transferencia_cantidad_utilizar',
+        'updated_at'
     ];
 
     // funciones publicas
@@ -43,6 +44,7 @@ class Transferencia extends Model
             'transferencia_producto_unidad' => $this->transferencia_producto_unidad,
             'transferencia_producto_rubro_id' => $this->transferencia_producto_rubro_id,
             'transferencia_cantidad_utilizar' => $this->transferencia_cantidad_utilizar,
+            'updated_at' => $this->updated_at,
         ];
     }
 

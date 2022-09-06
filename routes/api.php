@@ -21,9 +21,7 @@ use App\Http\Controllers\PresupuestacionProductosProveedoresController;
 use App\Http\Controllers\CondicionPagoController;
 use App\Http\Controllers\BorradorPresupuestacionController;
 use App\Http\Controllers\OrdenCompraController;
-
-
-
+use App\Http\Controllers\TransferenciaController;
 
 
 
@@ -137,6 +135,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/ordencompra/obtenerTodos', [OrdenCompraController::class,'getTodos']);
     Route::get('/ordencompra/obtenerDatos/{id}', [OrdenCompraController::class,'getDatos']);
 
+    // TRANSFERENCIAS
+    Route::get('/transferencia/obtenerTodos', [TransferenciaController::class,'getTodos']);
+
     
     
     // CONDICION DE PAGO
@@ -168,25 +169,25 @@ Route::group(['middleware' => ['web']], function () {
     Route::put('/articulo/actualizar/{id}', [ArticuloController::class,'update']);
     Route::delete('/articulo/eliminar/{id}', [ArticuloController::class,'destroy']);
 
-     // CATEGORIAS
-     Route::get('/categoria/obtenerTodos', [CategoriaController::class,'getTodos']);
-     Route::get('/categoria/obtenerTodosSelect', [CategoriaController::class,'getTodosSelect']);
-     Route::get('/categoria/obtenerDatos/{id}', [CategoriaController::class,'getDatos']);
-     Route::post('/categoria/crear', [CategoriaController::class,'crear']);
-     Route::put('/categoria/actualizar/{id}', [CategoriaController::class,'actualizar']);
-     Route::delete('/categoria/eliminar/{id}', [CategoriaController::class,'eliminar']);
+    // CATEGORIAS
+    Route::get('/categoria/obtenerTodos', [CategoriaController::class,'getTodos']);
+    Route::get('/categoria/obtenerTodosSelect', [CategoriaController::class,'getTodosSelect']);
+    Route::get('/categoria/obtenerDatos/{id}', [CategoriaController::class,'getDatos']);
+    Route::post('/categoria/crear', [CategoriaController::class,'crear']);
+    Route::put('/categoria/actualizar/{id}', [CategoriaController::class,'actualizar']);
+    Route::delete('/categoria/eliminar/{id}', [CategoriaController::class,'eliminar']);
  
-     // UNIDADES DE MEDIDA
-     Route::get('/unidad-medida/obtenerTodos', [UnidadMedidaController::class,'getTodos']);
-     Route::get('/unidad-medida/obtenerTodosSelect', [UnidadMedidaController::class,'getTodosSelect']);
-     Route::get('/unidad-medida/obtenerDatos/{id}', [UnidadMedidaController::class,'getDatos']);
-     Route::post('/unidad-medida/crear', [UnidadMedidaController::class,'crear']);
-     Route::put('/unidad-medida/actualizar/{id}', [UnidadMedidaController::class,'actualizar']);
-     Route::delete('/unidad-medida/eliminar/{id}', [UnidadMedidaController::class,'eliminar']);
- 
-     // MI CUENTA
-     Route::get('/mi-cuenta/obtenerDatos/{id}', [LoginController::class,'getDatos']);
- 
+    // UNIDADES DE MEDIDA
+    Route::get('/unidad-medida/obtenerTodos', [UnidadMedidaController::class,'getTodos']);
+    Route::get('/unidad-medida/obtenerTodosSelect', [UnidadMedidaController::class,'getTodosSelect']);
+    Route::get('/unidad-medida/obtenerDatos/{id}', [UnidadMedidaController::class,'getDatos']);
+    Route::post('/unidad-medida/crear', [UnidadMedidaController::class,'crear']);
+    Route::put('/unidad-medida/actualizar/{id}', [UnidadMedidaController::class,'actualizar']);
+    Route::delete('/unidad-medida/eliminar/{id}', [UnidadMedidaController::class,'eliminar']);
+
+    // MI CUENTA
+    Route::get('/mi-cuenta/obtenerDatos/{id}', [LoginController::class,'getDatos']);
+
 
 
 

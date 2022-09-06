@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Transferencia;
+use App\Models\Presupuestacion;
+use App\Models\PresupuestacionProductos;
+use App\Models\PresupuestacionProveedores;
+use App\Models\Deposito;
+
+
 
 class TransferenciaController extends Controller
 {
@@ -11,9 +18,35 @@ class TransferenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getTodos()
     {
-        //
+        $transferenciasDB = Transferencia::orderBy('transferencia_id', 'desc')->where('transferencia_presupuestacion_id', '<>', null)->get();
+
+
+        $listaDevolver = collect();
+        $listaDevolverPresupuestacion = collect();
+
+        foreach ($transferenciasDB as $itemTransferencia) {
+            // obtengo los datos de cada una de las transferencias
+            $transferencia = $itemTransferencia->obtenerObjDatos();
+
+            $presupuestacionDB = Presupuestacion::where('presupuestacion_id', '=', $itemTransferencia->transferencia_presupuestacion_id)->first();
+
+            $depositoDB = Deposito::where('deposito_id', '=', $itemTransferencia->transferencia_deposito_id)->first();
+
+
+            $objDevolver = [
+                'transferencia' => $transferencia,
+                'presupuestacion' => $presupuestacionDB,
+                'deposito' => $depositoDB,
+            ];
+
+            $listaDevolver->push($objDevolver);
+        }
+
+        return $listaDevolver;
+
+        
     }
 
     /**
