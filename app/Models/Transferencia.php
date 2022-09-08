@@ -26,6 +26,7 @@ class Transferencia extends Model
         'transferencia_producto_unidad',
         'transferencia_producto_rubro_id',
         'transferencia_cantidad_utilizar',
+        'transferencia_estado',
         'updated_at'
     ];
 
@@ -44,6 +45,7 @@ class Transferencia extends Model
             'transferencia_producto_unidad' => $this->transferencia_producto_unidad,
             'transferencia_producto_rubro_id' => $this->transferencia_producto_rubro_id,
             'transferencia_cantidad_utilizar' => $this->transferencia_cantidad_utilizar,
+            'transferencia_estado' => $this->transferencia_estado,
             'updated_at' => $this->updated_at,
         ];
     }

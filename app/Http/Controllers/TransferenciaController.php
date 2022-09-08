@@ -70,6 +70,24 @@ class TransferenciaController extends Controller
         //
     }
 
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function actualizar(Request $request){
+        $transferencia = Transferencia::findOrFail($request->id);
+
+        $transferencia->transferencia_estado = $request->estado;
+
+        if ($transferencia->save()) {
+            return $transferencia;
+        }
+    }
+
     /**
      * Display the specified resource.
      *

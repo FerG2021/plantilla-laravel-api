@@ -137,6 +137,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // TRANSFERENCIAS
     Route::get('/transferencia/obtenerTodos', [TransferenciaController::class,'getTodos']);
+    Route::post('/transferencia/actualizar', [TransferenciaController::class,'actualizar']);
 
     
     

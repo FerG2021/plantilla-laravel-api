@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('transferencia_producto_unidad');
             $table->integer('transferencia_producto_rubro_id');
             $table->decimal('transferencia_cantidad_utilizar', 8, 2);
+            $table->string('transferencia_estado')->nullable();
             $table->SoftDeletes(); 
             $table->timestamps();
         });
