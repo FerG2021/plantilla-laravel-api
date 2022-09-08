@@ -182,6 +182,8 @@ class PresupuestacionController extends Controller
 
                 $transferencia->transferencia_cantidad_utilizar = $itemTransferencia->cantidad_utilizar;
 
+                $transferencia->transferencia_estado = 'Pendiente';
+
                 $transferencia->save();
             }
 
