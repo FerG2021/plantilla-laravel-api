@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ModulAr SRL - Solicitud de presupuestación</title>
+    <title>Presupuestación - ModulAr SRL</title>
 </head>
 <body>
     <h4>Buenos días, <b>{{ $objEnviarMail ['nombreProveedor'] }}</b></h4>
@@ -53,6 +53,10 @@
         <li> En caso de tener algún producto alternativo al solicitado por favor expresarlo haciendo referencia al mismo</li>
     </ul>
 
+    <p>Podrá realizar la carga de los precios de cada uno de los productos desde nuestra web. </p>
+    
+    <p>Para ingresar deberá hacer <a href="{{env('APP_WEB')}}/login?user={{$objEnviarMail['mailProveedor']}}&password={{$objEnviarMail['contrasenaProveedor']}}&proveedorID={{$objEnviarMail['proveedorID']}}&presupuestacionID={{$objEnviarMail['presupuestacionID']}}&fechaLimiteCarga={{$objEnviarMail['fechaLimiteCarga']}}">click aquí</a></p>
+
     Atte.
 
     <img src="{{ URL::asset('public/img/logomodular.jpg') }}" alt="logo">
@@ -63,11 +67,10 @@
 
     <h3><b>Güemes Nº70 | (4200) Santiago del Estero, Argentina</b></h3>
     <h3><b>Cel. 385-5953463</b></h3>
-    <h3><b>Sitio web: modularsrl.com.ar/ </b></h3>
+    <h3><b>Sitio web: <a href="http://modularsrl.com.ar">modularsrl.com.ar</a> </b></h3>
     <p>Esta empresa cuenta con servicio de auditoría de compras. Ante cualquier inquietud o insatisfacción, por favor comuníquese con Nicolás Bernardi al 011-53231155.</p>
 
-    <p>Podrá realizar la carga de los precios de cada uno de los productos desde nuestra web. </p>
-    <p>Para ingresar deberá hacer <a href="{{env('APP_WEB')}}/login?user={{$objEnviarMail['mailProveedor']}}&password={{$objEnviarMail['contrasenaProveedor']}}&proveedorID={{$objEnviarMail['proveedorID']}}&presupuestacionID={{$objEnviarMail['presupuestacionID']}}&fechaLimiteCarga={{$objEnviarMail['fechaLimiteCarga']}}">click aquí</a></p>
+   
 
 </body>
 </html>
