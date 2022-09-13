@@ -23,7 +23,8 @@ class Plan extends Model
         'plan_plazo',
         'cliente_id',
         'deposito_id',
-        'transaccion_id'
+        'transaccion_id',
+        'empresa_codigo',
     ];
 
     // funciones publicas
@@ -37,7 +38,8 @@ class Plan extends Model
             'plan_plazo' => $this->plan_plazo,
             'cliente_id' => $this->cliente_id,
             'deposito_id' => $this->deposito_id,
-            'transaccion_id' => $this->transaccion_id
+            'transaccion_id' => $this->transaccion_id,
+            'empresa_codigo'  => $this->empresa_codigo,
         ];
     }
 }

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraProductos;
+use App\Models\Proveedor;
+use App\Models\Producto;
+use App\Models\CondicionPago;
+use App\Models\Plan;
 
 class OrdenCompraController extends Controller
 {
@@ -138,6 +142,14 @@ class OrdenCompraController extends Controller
 
     public function getDatos($id)
     {
+        $ordenCompraBD = OrdenCompra::where('ordenes_compras_id', '=', $id)->first();
+
+        $tipoFormaPagoDB = CondicionPago::where('condicionpago_id', '=', $ordenCompraBD->ordenes_compras_proveedor_forma_de_pago)->first();
+
+        $planDB = Plan::where('pLan_id', '=', $ordenCompraBD->ordenes_compras_presupuestacion_plan_id)->first();
+
+        $proveedorBD = Proveedor::where('proveedor_id', '=', $ordenCompraBD->ordenes_compras_proveedor_id)->first();
+
         $ordenCompraProductosBD = OrdenCompraProductos::where('ordenes_compras_id', '=', $id)->get();
 
         $listaProductosDevolver = collect();
@@ -145,10 +157,31 @@ class OrdenCompraController extends Controller
         foreach ($ordenCompraProductosBD as $itemOrdenCompraProductosBD) {
             $productoDevolver = $itemOrdenCompraProductosBD->obtenerObjDatos();
             
-            $listaProductosDevolver->push($productoDevolver);
+            $productoDatosDB = Producto::where('producto_id', '=', $itemOrdenCompraProductosBD->ordenes_compras_productos_producto_id)->first();
+
+            $objProductosDevolver = [
+                'productoOrdenCompra' => $productoDevolver,
+                'producto' => $productoDatosDB,
+            ];
+
+
+            // $listaProductosDevolver->push($productoDevolver);
+            $listaProductosDevolver->push($objProductosDevolver);
+
         }
 
-        return $listaProductosDevolver;
+
+        $objDevolver = [
+            'ordenCompra' => $ordenCompraBD,
+            'plan' => $planDB,
+            'formaPago' => $tipoFormaPagoDB,
+            'productosOrdenCompra' => $listaProductosDevolver,
+            'proveedorOrdenCompra' => $proveedorBD,
+        ];
+
+        // return $listaProductosDevolver;
+        return $objDevolver;
+
 
     }
 
