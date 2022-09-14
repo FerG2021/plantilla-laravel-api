@@ -65,6 +65,8 @@ class VistaPrevisionController extends Controller
     // }
 
 
+    
+    // FUNCION QUE ESTABA ANTERIORMENTE, TRAE LOS PRODUCTOS SEGUN EL RUBRO Y LAS FECHAS SELECCIONADAS PARA LA PROVSION
     public function getDatos(Request $request)
     {
         $arrayBuscarProductosEnPrevision = json_decode($request->arrayBuscarProductosEnPrevision);
@@ -109,6 +111,25 @@ class VistaPrevisionController extends Controller
         // return $productosVistaPrevisionDB;
 
     }
+
+    // public function getDatos(Request $request){
+    //     $productoDB = Producto::all();
+
+    //     $listaDevolver = collect();
+
+    //     foreach ($productoDB as $itemProducto) {
+    //         $rubroDB = Rubro::where('rubro_id', '=', $itemProducto->rubro_id)->first();
+
+    //         $objDevolver = [
+    //             'producto' => $itemProducto,
+    //             'rubro' => $rubroDB,
+    //         ];
+
+    //         $listaDevolver->push($objDevolver);
+    //     }        
+
+    //     return $listaDevolver;
+    // }
 
     /**
      * Show the form for creating a new resource.
