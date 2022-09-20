@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
+use App\Models\User;
 use App\Helpers\APIHelpers;
-use Validator;
+use Validator, Auth;
 
 
 class ProveedorController extends Controller
@@ -157,13 +158,53 @@ class ProveedorController extends Controller
 
     public function actualizar(Request $request)
     {
+        $rules = [
+            // 'email' => 'required | unique:App\Models\User,email',
+            'email' => 'unique:App\Models\User,email',
+        ];
+
+        $messages = [
+            // 'email.required' => 'El email es requerido',
+            'email.unique' => 'Ya existe un proveedor o usuario registrado con el email ingresado',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        
+        if ($validator->fails()) {
+            // $estado = 5;
+            // return response()->json([$validator->errors()]);
+
+            $respuesta = APIHelpers::createAPIResponse(true, 400, 'Se ha producido un error', $validator->errors());
+
+            return response()->json($respuesta, 200);
+
+        }
+
         $proveedor = Proveedor::findOrFail($request->id);
 
-        $proveedor->proveedor_email = $request->mail;
+        $proveedor->proveedor_email = $request->email;
 
         $proveedor->save();
 
-        return $proveedor;
+        // al actualizar el mail del proveedor se va a buscar si tambien está agregado en la tabla de usuarios para tambien actulizar el mail, ya que sino no se podrá acceder
+
+        $usuarioDB = User::where('proveedor_id', '=', $request->id)->first();
+
+        if ($usuarioDB) {
+            $usuarioDB->email = $request->email;
+            $usuarioDB->save();
+        }
+
+
+        if ($proveedor->save()) {
+            $respuesta = APIHelpers::createAPIResponse(false, 200, 'Proveedor actualizado con éxito', $validator->errors());
+
+            return response()->json($respuesta, 200);
+        }
+
+
+
+        // return $proveedor;
     }
 
 

@@ -65,7 +65,6 @@ class UserController extends Controller
                 'repetirContrasena.required' => 'Es necesario repetir la contrasena',
                 'repetirContrasena.same' => 'Las contraseñas ingresadas no coinciden',
                 'repetirContrasena.min' => 'La confirmación de la contraseña debe ser de 8 caracteres como mínimo',
-
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -179,7 +178,9 @@ class UserController extends Controller
 
     public function getDatosMail(Request $request)
     {
-        $usuarioDB = User::where('email', '=', $request->mail_usuario)->first();
+        // $usuarioDB = User::where('email', '=', $request->mail_usuario)->first();
+        $usuarioDB = User::where('email', '=', $request->mail_usuario)->where('tipo_usuario', '=', 1)->where('proveedor_id', '=', $request->proveedor_id)->first();
+
 
         if ($usuarioDB) {
             $listaDevolver = [
