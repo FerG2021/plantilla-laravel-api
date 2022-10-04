@@ -179,7 +179,7 @@ class UserController extends Controller
     public function getDatosMail(Request $request)
     {
         // $usuarioDB = User::where('email', '=', $request->mail_usuario)->first();
-        $usuarioDB = User::where('email', '=', $request->mail_usuario)->where('tipo_usuario', '=', 1)->where('proveedor_id', '=', $request->proveedor_id)->first();
+        $usuarioDB = User::where('email', '=', $request->mail_usuario)->where('tipo_usuario', '=', 2)->where('proveedor_id', '=', $request->proveedor_id)->first();
 
 
         if ($usuarioDB) {

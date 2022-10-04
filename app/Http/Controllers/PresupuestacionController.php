@@ -284,7 +284,8 @@ class PresupuestacionController extends Controller
 
 
 
-                    Mail::to($itemProveedores->proveedor_mail)->send(new TestMail($objEnviarMail, $listaProductosXProveedorMail));     
+                    Mail::to($itemProveedores->proveedor_mail)
+                        ->send(new TestMail($objEnviarMail, $listaProductosXProveedorMail));     
 
                 }
 

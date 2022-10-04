@@ -34,7 +34,7 @@ class TestMail extends Mailable
     {
         return $this->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'))
                     ->view('testmail')
-                    ->subject('Titulo del correo')
+                    ->subject('Solicitud de presupuestación')
                     ->with('objEnviarMail', $this->objEnviarMail)
                     ->with('listaProductosXProveedorMail', $this->listaProductosXProveedorMail);
     }

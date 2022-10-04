@@ -124,9 +124,13 @@ Route::group(['middleware' => ['web']], function () {
 
     // BORRADORES
     Route::post('/borradorpresupuestacion/crear', [BorradorPresupuestacionController::class,'crear']);
+    
     Route::get('/borradorpresupuestacion/obtenerTodos', [BorradorPresupuestacionController::class,'getTodos']);
+    
     Route::get('/borradorpresupuestacion/obtenerDatos/{id}', [BorradorPresupuestacionController::class,'getDatos']);
+    
     Route::post('/borradorpresupuestacion/actualizar', [BorradorPresupuestacionController::class,'actualizar']);
+    
     Route::post('/borradorpresupuestacion/crearPresupuestacion', [BorradorPresupuestacionController::class,'crearPesupuestacion']);
 
 

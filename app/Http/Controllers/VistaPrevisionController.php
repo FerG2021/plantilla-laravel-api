@@ -74,10 +74,29 @@ class VistaPrevisionController extends Controller
         $listaDevolver = collect();
 
         // primero voy a comparar si las dos fechas que mando son iguales
-        if ($arrayBuscarProductosEnPrevision[0]->fechaDesdePresupuestacion == $arrayBuscarProductosEnPrevision[0]->fechaHastaPresupuestacion) {
-            $productosVistaPrevisionDB = VistaPrevision::where('plan_id', '=', $arrayBuscarProductosEnPrevision[0]->plan_id)->where('prevision_periodo', '=', date("Y-m-d", strtotime($arrayBuscarProductosEnPrevision[0]->fechaDesdePresupuestacion)))->orderBy('producto_nombre', 'asc')->get();
+        if (
+            $arrayBuscarProductosEnPrevision[0]->fechaDesdePresupuestacion ==   $arrayBuscarProductosEnPrevision[0]->fechaHastaPresupuestacion
+            ) 
+        {
+            $productosVistaPrevisionDB = VistaPrevision::
+                where('plan_id', '=', $arrayBuscarProductosEnPrevision[0]->plan_id)
+                ->where('prevision_periodo', '=', date("Y-m-d", strtotime($arrayBuscarProductosEnPrevision[0]->fechaDesdePresupuestacion)))
+                ->orderBy('producto_nombre', 'asc')
+                ->get();
         } else {
-            $productosVistaPrevisionDB = VistaPrevision::where('plan_id', '=', $arrayBuscarProductosEnPrevision[0]->plan_id)->where('prevision_periodo', '>=', $arrayBuscarProductosEnPrevision[0]->fechaDesdePresupuestacion)->where('prevision_periodo', '<=', $arrayBuscarProductosEnPrevision[0]->fechaHastaPresupuestacion)->orderBy('producto_nombre', 'asc')->get();
+            $productosVistaPrevisionDB = VistaPrevision::
+                where('plan_id', '=', $arrayBuscarProductosEnPrevision[0]->plan_id)
+                ->where('prevision_periodo', '>=',  date("Y-m-d", strtotime($arrayBuscarProductosEnPrevision[0]->fechaDesdePresupuestacion)))
+                ->where('prevision_periodo', '<=', date("Y-m-d", strtotime($arrayBuscarProductosEnPrevision[0]->fechaHastaPresupuestacion)))
+                ->orderBy('producto_nombre', 'asc')
+                ->get();
+
+            // $productosVistaPrevisionDB = VistaPrevision::
+            //     where('plan_id', '=', $arrayBuscarProductosEnPrevision[0]->plan_id)
+            //     ->where('prevision_periodo', '>=', $arrayBuscarProductosEnPrevision[0]->fechaDesdePresupuestacion)
+            //     ->where('prevision_periodo', '<=', $arrayBuscarProductosEnPrevision[0]->fechaHastaPresupuestacion)
+            //     ->orderBy('producto_nombre', 'asc')
+            //     ->get();
         }
 
         foreach ($productosVistaPrevisionDB as $item) {

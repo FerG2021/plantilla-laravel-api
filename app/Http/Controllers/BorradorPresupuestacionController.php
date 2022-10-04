@@ -29,7 +29,7 @@ class BorradorPresupuestacionController extends Controller
      */
     public function getTodos()
     {
-        $presupuestacionBD = BorradorPresupuestacion::orderby('borrador_presupuestacion_id')->get();
+        $presupuestacionBD = BorradorPresupuestacion::orderby('borrador_presupuestacion_id', 'desc')->get();
 
         $listaDevolver = collect();
 
