@@ -179,8 +179,8 @@ class UserController extends Controller
     public function getDatosMail(Request $request)
     {
         // $usuarioDB = User::where('email', '=', $request->mail_usuario)->first();
-        $usuarioDB = User::where('email', '=', $request->mail_usuario)->where('tipo_usuario', '=', 2)->where('proveedor_id', '=', $request->proveedor_id)->first();
-
+        // $usuarioDB = User::where('email', '=', $request->mail_usuario)->where('tipo_usuario', '=', 2)->where('proveedor_id', '=', $request->proveedor_id)->first();
+        $usuarioDB = User::where('email', '=', $request->mail_usuario)->first();
 
         if ($usuarioDB) {
             $listaDevolver = [
@@ -194,7 +194,7 @@ class UserController extends Controller
 
             return response()->json($respuesta, 200);
         } else {
-            return 0;
+            return 1;
         }
         
     }
