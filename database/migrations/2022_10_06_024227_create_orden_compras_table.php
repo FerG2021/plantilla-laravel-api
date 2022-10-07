@@ -22,13 +22,13 @@ return new class extends Migration
             $table->string('ordenes_compras_proveedor_mail');
             $table->boolean('ordenes_compras_proveedor_factura_A');
             $table->integer('ordenes_compras_proveedor_forma_de_pago');
-            $table->decimal('ordenes_compras_descuentos_bonificaciones', 8, 2);
-            $table->decimal('ordenes_compras_monto_flete', 8, 2);
-            $table->decimal('ordenes_compras_monto_total_PP', 8, 2);
-            $table->decimal('ordenes_compras_monto_total_homogeneo', 8, 2);
+            $table->decimal('ordenes_compras_descuentos_bonificaciones', 14, 2);
+            $table->decimal('ordenes_compras_monto_flete', 14, 2);
+            $table->decimal('ordenes_compras_monto_total_PP', 14, 2);
+            $table->decimal('ordenes_compras_monto_total_homogeneo', 14, 2);
             $table->integer('ordenes_compras_presupuestacion_proveedor_id');
             $table->integer('ordenes_compras_presupuestacion_proveedor_rubro_id');
-            $table->decimal('ordenes_compras_monto_total', 8, 2);            
+            $table->decimal('ordenes_compras_monto_total', 14, 2);            
             $table->timestamps();
         });
     }

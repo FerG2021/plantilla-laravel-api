@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class LoginController extends Controller
 {
@@ -51,6 +53,39 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user){
         return response()->json($user);
     }
+
+
+    // public function login( Request $request ){
+    //     $user = User::where('email', '=', $request->email)->first();
+
+            
+    //     if (isset($user->id)) {
+    //         if (Hash::check($request->password, $user->password)) {
+    //             # creamos el token 
+    //             $token = $user->createToken("auth_token")->plainTextToken;
+    //             return response()->json([
+    //                 "status" => 1,
+    //                 "msg" => "Usuario entra",
+    //                 "access_token" => $token,
+    //             ], 404);
+    //         } else {
+    //             # no valido
+    //             return response()->json([
+    //                 "status" => 0,
+    //                 "msg" => "Usuario o contraseña incorrecta",
+    //             ], 404);
+    //         }
+            
+    //     } else {
+    //         # no valido
+    //         return response()->json([
+    //             "status" => 0,
+    //             "msg" => "Usuario no existe",
+    //         ], 404);
+    //     }
+        
+
+    // }
 
     
     /**

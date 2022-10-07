@@ -16,23 +16,23 @@ return new class extends Migration
         Schema::create('orden_compra_productos', function (Blueprint $table) {
             $table->increments('ordenes_compras_productos_id');
             $table->integer('ordenes_compras_id');
-            $table->decimal('ordenes_compras_productos_cantidad_proveedor', 8, 2);
-            $table->decimal('ordenes_compras_productos_iva', 8, 2);
-            $table->decimal('ordenes_compras_productos_precio_png', 8, 2);
-            $table->decimal('ordenes_compras_productos_precio_pp', 8, 2);
-            $table->decimal('ordenes_compras_productos_precio_pu', 8, 2);
+            $table->decimal('ordenes_compras_productos_cantidad_proveedor', 14, 2);
+            $table->decimal('ordenes_compras_productos_iva', 14, 2);
+            $table->decimal('ordenes_compras_productos_precio_png', 14, 2);
+            $table->decimal('ordenes_compras_productos_precio_pp', 14, 2);
+            $table->decimal('ordenes_compras_productos_precio_pu', 14, 2);
             $table->integer('ordenes_compras_productos_presupuestacion_id');
             $table->integer('ordenes_compras_productos_plan_id');
             $table->integer('ordenes_compras_productos_producto_id');
             $table->integer('ordenes_compras_productos_producto_proveedor_id');
             $table->integer('ordenes_compras_productos_rubro_id');
             $table->string('ordenes_compras_productos_rubro_nombre');
-            $table->decimal('ordenes_compras_productos_cantidad_a_comprar', 8, 2);
+            $table->decimal('ordenes_compras_productos_cantidad_a_comprar', 14, 2);
             $table->string('ordenes_compras_productos_producto_nombre');
             $table->integer('ordenes_compras_productos_proveedor_id');
             $table->string('ordenes_compras_productos_proveedor_mail');
             $table->string('ordenes_compras_productos_proveedor_nombre');
-            $table->decimal('ordenes_compras_productos_total_iva', 8, 2);
+            $table->decimal('ordenes_compras_productos_total_iva', 14, 2);
             $table->timestamps();
         });
     }
