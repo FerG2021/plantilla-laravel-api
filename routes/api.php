@@ -118,9 +118,22 @@ Route::group(['middleware' => ['web']], function () {
 
     // PRESUPUESTACION PRODUCTOS
     Route::post('/presupuestacionproductosproveedor/crear', [PresupuestacionProductosProveedoresController::class,'crear']);
-    Route::get('/presupuestacionproductosproveedor/obtenerTodos/{id}', [PresupuestacionProductosProveedoresController::class,'getTodos']);
+    
+    Route::post('/presupuestacionproductosproveedor/crearBorrador', [PresupuestacionProductosProveedoresController::class,'crearBorrador']);
+    
+    // Route::get('/presupuestacionproductosproveedor/obtenerTodos/{id}', [PresupuestacionProductosProveedoresController::class,'getTodos']);
+    Route::post('/presupuestacionproductosproveedor/obtenerTodos', [PresupuestacionProductosProveedoresController::class,'getTodos']);
+
+    
     Route::post('/presupuestacionproductosproveedor/obtenerTodosDatos', [PresupuestacionProductosProveedoresController::class,'getTodosDatos']);
-    Route::get('/presupuestacionproductosproveedor/obtenerTodosProveedores/{id}', [PresupuestacionProductosProveedoresController::class,'getTodosProveedores']);
+    
+    // Route::get('/presupuestacionproductosproveedor/obtenerTodosProveedores/{id}', [PresupuestacionProductosProveedoresController::class,'getTodosProveedores']);
+    Route::post('/presupuestacionproductosproveedor/obtenerTodosProveedores', [PresupuestacionProductosProveedoresController::class,'getTodosProveedores']);
+
+
+    Route::get('/presupuestacionproductosproveedor/condicionComparativa/{id}', [PresupuestacionProductosProveedoresController::class,'getCondicionComparativa']);
+
+
 
     // BORRADORES
     Route::post('/borradorpresupuestacion/crear', [BorradorPresupuestacionController::class,'crear']);

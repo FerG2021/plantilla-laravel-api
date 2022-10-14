@@ -1,0 +1,50 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('borrador_comparativa_productos_proveedores', function (Blueprint $table) {
+            $table->increments('borrador_comparativa_productos_proveedores_id');
+            $table->integer('borrador_comparativa_id');
+            $table->integer('presupuestacion_producto_id');
+            $table->integer('presupuestacion_id');
+            $table->integer('presupuestacion_plan_id');
+            $table->integer('presupuestacion_rubro_id');
+            $table->string('presupuestacion_rubro_nombre');
+            $table->integer('proveedor_id');
+            $table->string('proveedor_nombre');
+            $table->string('proveedor_mail');
+            $table->integer('producto_id');
+            $table->string('producto_nombre');
+            $table->decimal('producto_cantidad_a_comprar', 14, 2);
+            $table->decimal('factor', 14, 2);
+            $table->decimal('cantidad_proveedor', 14, 2);
+            $table->decimal('precio_png', 14, 2);
+            $table->decimal('iva', 14, 2);
+            $table->decimal('total_iva', 14, 2);
+            $table->decimal('precio_pu', 14, 2);
+            $table->decimal('precio_pp', 14, 2);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('borrador_comparativa_productos_proveedores');
+    }
+};

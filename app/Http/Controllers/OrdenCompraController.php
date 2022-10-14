@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\APIHelpers;
 use App\Models\OrdenCompra;
 use App\Models\OrdenCompraProductos;
 use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\CondicionPago;
 use App\Models\Plan;
+use App\Models\Comparativa;
+use App\Models\BorradorComparativa;
+use App\Models\BorradorComparativaProveedores;
+use App\Models\BorradorComparativaProductosProveedores;
 
 class OrdenCompraController extends Controller
 {
@@ -31,7 +36,98 @@ class OrdenCompraController extends Controller
     {
         // recorro el array que trae los datos para las ordendes de compra
         $arrOrdenesCompra = json_decode($request->arrayOrdenesCompra);
-        
+
+        // recibo el array de los datos para guardar los datos
+        $arrayDatosBorrador = json_decode($request->arrayDatosBorrador);
+
+        // pregunto si hay un borrador creado para la presupuestacion_id
+        $borradorComparativa = BorradorComparativa::where('borrador_comparativa_presupuestacion_id' , '=', $request->presupuestacion_id)->first();
+
+
+        // guardo los datos del borrador, se usan las mismas tablas ya que una vez que se generen las ordenes de compra no se puede modificar la comparativa
+
+        // recorro el array para obtener los datos
+        foreach ($arrayDatosBorrador as $item) {
+            // proveedores
+            $proveedor = BorradorComparativaProveedores::where('presupuestacion_id', '=', $item->presupuestacion_id)
+            ->where('proveedor_id', '=', $item->proveedor_id)->first();
+
+            
+            $proveedor->presupuestacion_plan_id = $item->presupuestacion_plan_id;
+            
+            $proveedor->proveedor_nombre = $item->proveedor_nombre;
+            
+            $proveedor->proveedor_rubro_id = $item->proveedor_rubro_id;
+            
+            $proveedor->proveedor_mail = $item->proveedor_mail;
+            
+            $proveedor->proveedor_monto_totalPP = $item->proveedor_monto_totalPP;
+            
+            $proveedor->proveedor_monto_flete = $item->proveedor_monto_flete;
+            
+            $proveedor->proveedor_factura_A = $item->proveedor_factura_A;
+            
+            $proveedor->proveedor_monto_factura_A = $item->proveedor_monto_factura_A;
+            
+            $proveedor->proveedor_forma_de_pago = $item->proveedor_forma_de_pago;
+            
+            $proveedor->proveedor_monto_descuentos_bonificaciones = $item->proveedor_monto_descuentos_bonificaciones;
+            
+            $proveedor->proveedor_monto_total_homogeneo = $item->proveedor_monto_total_homogeneo;
+
+            $proveedor->save();
+
+
+            // productos
+            foreach ($item->productos as $itemProducto) {
+                $productoBD = BorradorComparativaProductosProveedores::where('presupuestacion_id', '=', $itemProducto->presupuestacion_id)
+                ->where('proveedor_id', '=', $itemProducto->proveedor_id)->where('producto_id', '=', $itemProducto->producto_id)->first();
+
+                
+                $productoBD->presupuestacion_producto_id = $itemProducto->presupuestacion_producto_id;
+                
+                $productoBD->presupuestacion_plan_id = $itemProducto->presupuestacion_plan_id;
+                
+                $productoBD->presupuestacion_rubro_id = $itemProducto->presupuestacion_rubro_id;
+                
+                $productoBD->presupuestacion_rubro_nombre = $itemProducto->presupuestacion_rubro_nombre;
+                
+                $productoBD->proveedor_nombre = $itemProducto->proveedor_nombre;
+                
+                $productoBD->proveedor_mail = $itemProducto->proveedor_mail;
+                
+                $productoBD->producto_nombre = $itemProducto->producto_nombre;
+                
+                $productoBD->producto_cantidad_a_comprar = $itemProducto->producto_cantidad_a_comprar;
+                
+                $productoBD->factor = $itemProducto->factor;
+                
+                $productoBD->cantidad_proveedor = $itemProducto->cantidad_proveedor;
+                
+                $productoBD->precio_png = $itemProducto->precio_png;
+                
+                $productoBD->iva = $itemProducto->iva;
+                
+                $productoBD->total_iva = $itemProducto->totaliva;
+                
+                $productoBD->precio_pu = $itemProducto->precio_pu;
+                
+                $productoBD->precio_pp = $itemProducto->precio_pp;
+
+                $productoBD->save();
+            }
+        }
+
+
+        // genero una compartiva, luego si busco la comparativa por presupuestacion_id significa que ya se creo una y no se pueden volver a editar los datos
+        $comparativa = new Comparativa();
+
+        $comparativa->comparativa_presupuestacion_id = $request->presupuestacion_id;
+        $comparativa->save();
+
+
+
+        // genero las ordenes de compra
         foreach ($arrOrdenesCompra as $itemOrdenCompra) {
             // guardo los datos de cada una de las ordenes de compra
             $ordenCompra = new OrdenCompra();
@@ -103,7 +199,10 @@ class OrdenCompraController extends Controller
                 
                 $ordenCompraProductos->ordenes_compras_productos_producto_nombre = $itemProductoOrdenCompra->producto_nombre;
                 
-                $ordenCompraProductos->ordenes_compras_productos_proveedor_id = $itemProductoOrdenCompra->presupuestacion_productos_proveedores_id;
+                // $ordenCompraProductos->ordenes_compras_productos_proveedor_id = $itemProductoOrdenCompra->presupuestacion_productos_proveedores_id;
+
+                $ordenCompraProductos->ordenes_compras_productos_proveedor_id = $itemProductoOrdenCompra->proveedor_id;
+
                 
                 $ordenCompraProductos->ordenes_compras_productos_proveedor_mail = $itemProductoOrdenCompra->proveedor_mail;
                 
@@ -114,6 +213,11 @@ class OrdenCompraController extends Controller
                 $ordenCompraProductos->save();
             }
         }
+
+
+        $respuesta = APIHelpers::createAPIResponse(false, 200, 'Órdenes de compra generadas con éxito', null);
+
+        return $respuesta;
     }
 
     /**
