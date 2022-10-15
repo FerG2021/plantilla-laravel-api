@@ -394,7 +394,77 @@ class PresupuestacionProductosProveedoresController extends Controller
         }
     }
 
+    public function getTodosProveedor($id)
+    {
+        // se utilizan los datos originales
+        $proveedores = PresupuestacionProveedores::where('presupuestacion_id', '=', $id)->get();
 
+        $productoProveedor = PresupuestacionProductosProveedores::where('presupuestacion_id', '=', $id)->get();
+
+        $listaDevolver = collect();
+        
+        foreach ($proveedores as $itemProveedor) {
+            $productos = collect();
+
+            foreach ($productoProveedor as $itemProducto) {
+                if ($itemProveedor->proveedor_id == $itemProducto->proveedor_id) {
+                    $productos->push($itemProducto);
+                }
+            }
+
+            // busco los productos de la tabla de productos para agregar la unidad de medida
+            $productosTodosDB = Producto::all();
+            $productosCompleto = collect();
+
+            foreach ($productosTodosDB as $itemProductosTodosDB) {
+                foreach ($productos as $itemProductos) {
+                    if ($itemProductos->producto_id == $itemProductosTodosDB->producto_id) {
+                        $productosCompleto->push($itemProductosTodosDB);
+                    }
+                }
+            }
+
+
+            // $listaProductosDevolver = collect();
+            
+            // foreach ($productoProveedor as $itemProducto) {
+            //     if ($itemProveedor->proveedor_id == $itemProducto->proveedor_id) {
+            //         $productoBD = Producto::find($itemProducto->producto_id);
+
+            //         $productoDevolver = [
+            //             'productoPresupuestacion' => $itemProducto,
+            //             'producto' => $productoBD,
+            //         ];
+
+            //         $productos->push($productoDevolver);
+            //     }
+            // }
+
+            $objDevolver = [
+                'presupuestacion_proveedor_id' => $itemProveedor->presupuestacion_proveedor_id,
+                'presupuestacion_id' => $itemProveedor->presupuestacion_id,
+                'presupuestacion_plan_id' => $itemProveedor->presupuestacion_plan_id,
+                'proveedor_id' => $itemProveedor->proveedor_id,
+                'proveedor_nombre' => $itemProveedor->proveedor_nombre,
+                'proveedor_rubro_id' => $itemProveedor->proveedor_rubro_id,
+                'proveedor_mail' => $itemProveedor->proveedor_mail, 
+                'proveedor_monto_totalPP' => $itemProveedor->proveedor_monto_totalPP,
+                'proveedor_monto_flete' => $itemProveedor->proveedor_monto_flete,
+                'proveedor_factura_A' => $itemProveedor->proveedor_factura_A,
+                'proveedor_monto_factura_A' => $itemProveedor->proveedor_monto_factura_A,
+                'proveedor_forma_de_pago' => $itemProveedor->proveedor_forma_de_pago,
+                'proveedor_monto_descuentos_bonificaciones' => $itemProveedor->proveedor_monto_descuentos_bonificaciones,
+                'proveedor_monto_total_homogeneo' => $itemProveedor->proveedor_monto_total_homogeneo,
+                'productos' => $productos,
+                'productosDB' => $productosCompleto,
+            ];
+
+            $listaDevolver->push($objDevolver);
+        }
+
+        
+        return $listaDevolver;
+    }
 
 
     /**

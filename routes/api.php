@@ -121,7 +121,8 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::post('/presupuestacionproductosproveedor/crearBorrador', [PresupuestacionProductosProveedoresController::class,'crearBorrador']);
     
-    // Route::get('/presupuestacionproductosproveedor/obtenerTodos/{id}', [PresupuestacionProductosProveedoresController::class,'getTodos']);
+    Route::get('/presupuestacionproductosproveedor/obtenerTodosProveedor/{id}', [PresupuestacionProductosProveedoresController::class,'getTodosProveedor']);
+
     Route::post('/presupuestacionproductosproveedor/obtenerTodos', [PresupuestacionProductosProveedoresController::class,'getTodos']);
 
     
