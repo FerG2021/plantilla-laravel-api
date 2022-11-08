@@ -27,6 +27,7 @@ class OrdenCompra extends Model
         'ordenes_compras_presupuestacion_proveedor_id',
         'ordenes_compras_presupuestacion_proveedor_rubro_id',
         'ordenes_compras_monto_total',
+        'ordenes_compras_estado',
     ];
 
     // funciones publicas
@@ -47,6 +48,7 @@ class OrdenCompra extends Model
             'ordenes_compras_presupuestacion_proveedor_id' => $this->ordenes_compras_presupuestacion_proveedor_id,
             'ordenes_compras_presupuestacion_proveedor_rubro_id' => $this->ordenes_compras_presupuestacion_proveedor_rubro_id,
             'ordenes_compras_monto_total' => $this->ordenes_compras_monto_total,
+            'ordenes_compras_estado' => $this->ordenes_compras_estado,
         ];
     }
 }

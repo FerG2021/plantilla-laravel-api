@@ -28,7 +28,8 @@ return new class extends Migration
             $table->decimal('ordenes_compras_monto_total_homogeneo', 14, 2);
             $table->integer('ordenes_compras_presupuestacion_proveedor_id');
             $table->integer('ordenes_compras_presupuestacion_proveedor_rubro_id');
-            $table->decimal('ordenes_compras_monto_total', 14, 2);            
+            $table->decimal('ordenes_compras_monto_total', 14, 2);   
+            $table->integer('ordenes_compras_estado');         
             $table->timestamps();
         });
     }

@@ -14,6 +14,8 @@ use App\Models\Comparativa;
 use App\Models\BorradorComparativa;
 use App\Models\BorradorComparativaProveedores;
 use App\Models\BorradorComparativaProductosProveedores;
+use GuzzleHttpClient;
+use Illuminate\Support\Facades\Http;
 
 class OrdenCompraController extends Controller
 {
@@ -160,6 +162,8 @@ class OrdenCompraController extends Controller
             
             $ordenCompra->ordenes_compras_monto_total = $itemOrdenCompra->montoTotalOrdenCompra;
 
+            $ordenCompra->ordenes_compras_estado = 0;
+
             $ordenCompra->save();
 
             // busco la orden de compra creada para tomar la presupuestacion_id
@@ -218,6 +222,143 @@ class OrdenCompraController extends Controller
         $respuesta = APIHelpers::createAPIResponse(false, 200, 'Órdenes de compra generadas con éxito', null);
 
         return $respuesta;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function obtenerToken()
+    {
+        $client = new \GuzzleHttp\Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://2.teamplace.finneg.com',
+        ]);
+
+        $response = $client->request('GET', '/BSA/api/oauth/token', [
+            'query' => [
+                'grant_type' => 'client_credentials',
+                'client_id' => '546aed61e07e0a1bf15187826411ec59',
+                'client_secret' => 'b7444b18891462bd6e856d58c09af151',
+            ]
+        ]);
+
+        return $response;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function enviarOrdenCompra(Request $request)
+    {
+        $client = new \GuzzleHttp\Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://2.teamplace.finneg.com',
+        ]);
+
+        $url = '/BSA/api/ordenCompra?ACCESS_TOKEN=' . $request->token;
+
+        $response = $client->request('POST', $url, 
+            [
+                // 'ACCESS_TOKEN' => $request->token,
+                // 'body' => [
+                //     json_encode($request->ordenCompra),
+                // ] 
+
+                'json' => $request->ordenCompra,
+            ]
+        );
+
+        if ( $response->getStatusCode() == 200) {
+
+            $ordenCompra = OrdenCompra::where('ordenes_compras_id', '=', $request->ordenCompraID)->first();
+
+            if ($ordenCompra) {
+                $ordenCompra->ordenes_compras_estado = 1;
+
+                if ($ordenCompra->save()) {
+                    return $response->getBody();                    
+                }
+            }
+        } else {
+            return $response;
+        }
+
+
+        
+
+        // $response = Http::post('https://2.teamplace.finneg.com/BSA/api/ordenCompra', [
+        //     'ACCESS_TOKEN' => $request->token,
+        //     'body' =>  json_encode($request->ordenCompra),
+        // ]);
+
+        // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        // $out->writeln($response);
+
+        
+
+       
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function enviarOrdenCompraAdelantada(Request $request)
+    {
+        $client = new \GuzzleHttp\Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://2.teamplace.finneg.com',
+        ]);
+
+        $url = '/BSA/api/ordenCompraAdelantada?ACCESS_TOKEN=' . $request->token;
+
+        $response = $client->request('POST', $url, 
+            [
+                // 'ACCESS_TOKEN' => $request->token,
+                // 'body' => [
+                //     json_encode($request->ordenCompra),
+                // ] 
+
+                'json' => $request->ordenCompra,
+            ]
+        );
+
+        if ( $response->getStatusCode() == 200) {
+
+            $ordenCompra = OrdenCompra::where('ordenes_compras_id', '=', $request->ordenCompraID)->first();
+
+            if ($ordenCompra) {
+                $ordenCompra->ordenes_compras_estado = 1;
+
+                if ($ordenCompra->save()) {
+                    return $response->getBody();                    
+                }
+            }
+        } else {
+            return $response;
+        }
+
+
+        
+
+        // $response = Http::post('https://2.teamplace.finneg.com/BSA/api/ordenCompra', [
+        //     'ACCESS_TOKEN' => $request->token,
+        //     'body' =>  json_encode($request->ordenCompra),
+        // ]);
+
+        // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        // $out->writeln($response);
+
+        
+
+       
     }
 
     /**

@@ -148,10 +148,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/borradorpresupuestacion/crearPresupuestacion', [BorradorPresupuestacionController::class,'crearPesupuestacion']);
 
 
-    // ORDENES DE PAGO
+    // ORDENES DE COMPRA
     Route::post('/ordencompra/crear', [OrdenCompraController::class,'crear']);
     Route::get('/ordencompra/obtenerTodos', [OrdenCompraController::class,'getTodos']);
     Route::get('/ordencompra/obtenerDatos/{id}', [OrdenCompraController::class,'getDatos']);
+    Route::get('/ordencompra/obtenerToken', [OrdenCompraController::class,'obtenerToken']);
+    Route::post('/ordencompra/enviarOrdenCompra', [OrdenCompraController::class,'enviarOrdenCompra']);
+    Route::post('/ordencompra/enviarOrdenCompraAdelantada', [OrdenCompraController::class,'enviarOrdenCompraAdelantada']);
+
 
     // TRANSFERENCIAS
     Route::get('/transferencia/obtenerTodos', [TransferenciaController::class,'getTodos']);
