@@ -51,8 +51,9 @@ class UserController extends Controller
                 'nombre' => 'required',
                 'email' => 'required | unique:App\Models\User,email',
                 'contrasena' => 'required | min: 8',
-                'repetirContrasena' => 'required|same:contrasena|min:8'
+                'repetirContrasena' => 'required|same:contrasena|min:8',
                 // 'repetirContrasena' => 'required|min:8'
+                'tipoUsuario' => 'required',
 
             ];
 
@@ -65,6 +66,7 @@ class UserController extends Controller
                 'repetirContrasena.required' => 'Es necesario repetir la contrasena',
                 'repetirContrasena.same' => 'Las contraseñas ingresadas no coinciden',
                 'repetirContrasena.min' => 'La confirmación de la contraseña debe ser de 8 caracteres como mínimo',
+                'tipoUsuario' => 'El rol del usuario es requerido',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -84,7 +86,7 @@ class UserController extends Controller
             $usuario->name = $request->nombre;
             $usuario->email = $request->email;
             $usuario->password = Hash::make($request->contrasena);
-            $usuario->tipo_usuario = 1;
+            $usuario->tipo_usuario = $request->tipoUsuario;
 
             $usuario->save();
 
@@ -165,6 +167,7 @@ class UserController extends Controller
                 'id' => $usuarioDB->id,
                 'nombre' => $usuarioDB->name,
                 'email' => $usuarioDB->email,
+                'tipoUsuario' => $usuarioDB->tipo_usuario,
             ];
 
             $respuesta = APIHelpers::createAPIResponse(false, 200, 'Usuario encontrado', $listaDevolver);
@@ -214,9 +217,10 @@ class UserController extends Controller
             'email' => 'required',
             'contrasena' => 'sometimes',
             // 'repetirContrasena' => 'sometimes|required_if:contrasena,!=,null|same:contrasena',
-            'repetirContrasena' => 'sometimes|same:contrasena'
+            'repetirContrasena' => 'sometimes|same:contrasena',
 
             // 'repetirContrasena' => 'required|min:8'
+            'tipoUsuario' => 'sometimes',
 
         ];
 
@@ -224,6 +228,7 @@ class UserController extends Controller
             'nombre.required' => 'El nombre es requerido',
             'email.required' => 'El email es requerido',
             'repetirContrasena.same' => 'Las contraseñas ingresadas no coinciden',
+            // 'tipoUsuario.required' => 'El rol del usuario es requerido',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -244,6 +249,11 @@ class UserController extends Controller
 
         $usuario->name = $request->nombre;
         $usuario->email = $request->email;
+
+        if ($request->tipoUsuario) {
+            $usuario->tipo_usuario = $request->tipoUsuario;
+        }
+        
         if ($request->contrasena != null) {
             $usuario->password = Hash::make($request->contrasena);
         }
