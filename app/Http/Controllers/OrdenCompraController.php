@@ -233,10 +233,12 @@ class OrdenCompraController extends Controller
     {
         $client = new \GuzzleHttp\Client([
             // Base URI is used with relative requests
-            'base_uri' => 'https://2.teamplace.finneg.com',
+            // 'base_uri' => 'https://2.teamplace.finneg.com',
+            'base_uri' => 'https://api.teamplace.finneg.com',
         ]);
 
-        $response = $client->request('GET', '/BSA/api/oauth/token', [
+        // $response = $client->request('GET', '/BSA/api/oauth/token', [
+            $response = $client->request('GET', '/api/oauth/token', [
             'query' => [
                 'grant_type' => 'client_credentials',
                 'client_id' => '546aed61e07e0a1bf15187826411ec59',
@@ -257,10 +259,11 @@ class OrdenCompraController extends Controller
     {
         $client = new \GuzzleHttp\Client([
             // Base URI is used with relative requests
-            'base_uri' => 'https://2.teamplace.finneg.com',
+            // 'base_uri' => 'https://2.teamplace.finneg.com',
+            'base_uri' => 'https://api.teamplace.finneg.com',
         ]);
 
-        $url = '/BSA/api/ordenCompra?ACCESS_TOKEN=' . $request->token;
+        $url = '/api/ordenCompra?ACCESS_TOKEN=' . $request->token;
 
         $response = $client->request('POST', $url, 
             [
@@ -314,10 +317,11 @@ class OrdenCompraController extends Controller
     {
         $client = new \GuzzleHttp\Client([
             // Base URI is used with relative requests
-            'base_uri' => 'https://2.teamplace.finneg.com',
+            // 'base_uri' => 'https://2.teamplace.finneg.com',
+            'base_uri' => 'https://api.teamplace.finneg.com',
         ]);
 
-        $url = '/BSA/api/ordenCompraAdelantada?ACCESS_TOKEN=' . $request->token;
+        $url = '/api/ordenCompraAdelantada?ACCESS_TOKEN=' . $request->token;
 
         $response = $client->request('POST', $url, 
             [
