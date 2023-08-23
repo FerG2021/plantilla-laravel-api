@@ -112,6 +112,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/presupuestacion/crear', [PresupuestacionController::class,'crear']);
     Route::get('/presupuestacion/obtenerTodos', [PresupuestacionController::class,'getTodos']);
     Route::get('/presupuestacion/obtenerDatos/{id}', [PresupuestacionController::class,'getDatos']);
+    Route::post('/presupuestacion/deleteProduct', [PresupuestacionController::class,'deleteProduct']);
 
     // PRESUPUESTACION PROVEEDORES
     // Route::get('/presupuestacionproveedores/obtenerTodos/{id}', [PresupuestacionProveedoresController::class,'getTodos']);
