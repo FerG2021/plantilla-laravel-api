@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Presupuestacion;
 use App\Models\PresupuestacionProductos;
+use App\Models\PresupuestacionProductosProveedores;
 use App\Models\PresupuestacionProveedores;
 use App\Models\Producto;
 use App\Models\User;
 use App\Models\Transferencia;
 use App\Mail\TestMail;
 use Mail;
+use App\Helpers\APIHelpers;
+
 
 
 
@@ -291,20 +294,6 @@ class PresupuestacionController extends Controller
 
             }
         }
-
-
-        
-
-        // $data = "Amor de mi vida";
-        // Mail::to('sabrinampereyra@gmail.com')->send(new TestMail($data));  
-
-
-        
-
-
-        
-
-
         return $request->presupuestacion_plan_id;
 
     }
@@ -364,4 +353,40 @@ class PresupuestacionController extends Controller
     {
         //
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteProduct(Request $request)
+    {
+        $presupuestacionproductosDB = PresupuestacionProductos::where('presupuestacion_id', '=', $request->presupuestacion_id)
+        ->where('producto_id', '=', $request->producto_id)
+        ->delete();
+
+        $presupuestacionproductosproveedoresDB = PresupuestacionProductosProveedores::where('presupuestacion_id', '=', $request->presupuestacion_id)
+        ->where('producto_id', '=', $request->producto_id)
+        ->delete();
+
+        $respuesta = APIHelpers::createAPIResponse(false, 200, 'Producto eliminado con éxito', 'Producto eliminado con éxito');
+
+        return response()->json($respuesta, 200);
+
+        // $listaDevolver = collect();
+
+        // $objReturn = [
+        //     'presupuestacionproductosDB' => $presupuestacionproductosDB,
+        //     'presupuestacionproductosproveedoresDB' => $presupuestacionproductosproveedoresDB,
+        // ];
+
+        // $listaDevolver->push($objReturn);
+
+
+        // return $objReturn;
+
+        
+    }
+
 }
